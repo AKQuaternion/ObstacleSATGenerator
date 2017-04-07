@@ -5,7 +5,7 @@
  *      Author: hartman
  */
 
-#include "Graph.h"
+#include "Graph.hpp"
 
 #include <fstream>
 #include <vector>
