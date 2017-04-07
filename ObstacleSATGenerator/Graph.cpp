@@ -36,6 +36,10 @@ Graph::Graph(const std::string & fname)
     }
 }
 
+bool Graph::edge(Vertex i, Vertex j) {
+    return _adjacencies[i][j];
+}
+
 bool Graph::notAdjacentToAnyButLast(const Path & p, Vertex vert) const
 {
     for(size_t ii=0;ii<p.size()-1;++ii)
