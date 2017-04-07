@@ -7,3 +7,11 @@
 //
 
 #include "Variable.hpp"
+
+Variable::Variable(std::string name) : _name(name)
+{}
+
+Variable operator-(Variable rhs) {
+    rhs._sign = !rhs._sign;
+    return rhs;
+}
