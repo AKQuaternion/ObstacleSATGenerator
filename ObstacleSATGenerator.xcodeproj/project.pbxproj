@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4973BE4D1E9811DD0066F131 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4973BE4C1E9811DD0066F131 /* main.cpp */; };
+		4973BE551E9812EE0066F131 /* Variable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4973BE531E9812EE0066F131 /* Variable.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,8 @@
 /* Begin PBXFileReference section */
 		4973BE491E9811DD0066F131 /* ObstacleSATGenerator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ObstacleSATGenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		4973BE4C1E9811DD0066F131 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		4973BE531E9812EE0066F131 /* Variable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Variable.cpp; sourceTree = "<group>"; };
+		4973BE541E9812EE0066F131 /* Variable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Variable.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +61,8 @@
 			isa = PBXGroup;
 			children = (
 				4973BE4C1E9811DD0066F131 /* main.cpp */,
+				4973BE531E9812EE0066F131 /* Variable.cpp */,
+				4973BE541E9812EE0066F131 /* Variable.hpp */,
 			);
 			path = ObstacleSATGenerator;
 			sourceTree = "<group>";
@@ -120,6 +125,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4973BE4D1E9811DD0066F131 /* main.cpp in Sources */,
+				4973BE551E9812EE0066F131 /* Variable.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +224,7 @@
 		4973BE511E9811DD0066F131 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -225,6 +232,7 @@
 		4973BE521E9811DD0066F131 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -248,6 +256,7 @@
 				4973BE521E9811DD0066F131 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
