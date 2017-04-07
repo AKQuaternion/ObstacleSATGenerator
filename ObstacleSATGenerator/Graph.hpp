@@ -26,7 +26,7 @@ public:
     Graph(const std::string &fname);
     size_t numVerts() const;
     PathGroup allPathsBetweenNonAdjacentVertices();
-    bool edge(Vertex i, Vertex j);
+    bool edge(Vertex i, Vertex j) const;
     
 private:
     bool notAdjacentToAnyButLast(const Path &p, Vertex vert) const;

@@ -36,7 +36,7 @@ Graph::Graph(const std::string & fname)
     }
 }
 
-bool Graph::edge(Vertex i, Vertex j) {
+bool Graph::edge(Vertex i, Vertex j) const {
     return _adjacencies[i][j];
 }
 
