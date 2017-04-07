@@ -33,7 +33,7 @@
 		4973BE541E9812EE0066F131 /* Variable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Variable.hpp; sourceTree = "<group>"; };
 		497482541E982DED003C4F76 /* SATInstance.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SATInstance.cpp; sourceTree = "<group>"; };
 		497482551E982DED003C4F76 /* SATInstance.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SATInstance.hpp; sourceTree = "<group>"; };
-		497482571E983A87003C4F76 /* Graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graph.h; sourceTree = "<group>"; };
+		497482571E983A87003C4F76 /* Graph.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Graph.hpp; sourceTree = "<group>"; };
 		497482581E983A87003C4F76 /* Graph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Graph.cpp; sourceTree = "<group>"; };
 		4974825A1E983FA5003C4F76 /* SATInstanceGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SATInstanceGenerator.cpp; sourceTree = "<group>"; };
 		4974825B1E983FA5003C4F76 /* SATInstanceGenerator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SATInstanceGenerator.hpp; sourceTree = "<group>"; };
@@ -70,7 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				4973BE4C1E9811DD0066F131 /* main.cpp */,
-				497482571E983A87003C4F76 /* Graph.h */,
+				497482571E983A87003C4F76 /* Graph.hpp */,
 				497482581E983A87003C4F76 /* Graph.cpp */,
 				4973BE531E9812EE0066F131 /* Variable.cpp */,
 				4973BE541E9812EE0066F131 /* Variable.hpp */,
