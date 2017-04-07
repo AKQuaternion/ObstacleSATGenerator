@@ -14,6 +14,8 @@ class Variable {
     friend Variable operator-(const Variable rhs);
 public:
     Variable(std::string name);
+    bool negated() const;
+    const std::string & name() const;
 private:
     bool _sign = true;
     std::string _name;
