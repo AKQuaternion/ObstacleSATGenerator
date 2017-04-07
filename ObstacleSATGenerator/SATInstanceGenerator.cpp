@@ -7,3 +7,6 @@
 //
 
 #include "SATInstanceGenerator.hpp"
+
+SATInstanceGenerator::SATInstanceGenerator(const Graph &g) :_g(g) {
+}
