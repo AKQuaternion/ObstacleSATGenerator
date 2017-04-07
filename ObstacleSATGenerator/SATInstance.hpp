@@ -18,11 +18,12 @@
 
 using Clause = std::vector<Variable>;
 
-class SATInstance_ {
+class SATInstance {
 public:
-    void addClause();
-    void writeCNF(const std::string) const;
+    void addClause(const Clause &c);
+    void writeCNF(const std::string &) const;
 private:
+    size_t numberFromVariable(const Variable &v) const;
     std::vector<Clause> _clauses;
     std::map<std::string,size_t> _variableNumbers;
 };
