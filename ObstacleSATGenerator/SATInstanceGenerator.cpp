@@ -77,16 +77,12 @@ void SATInstanceGenerator::addNonEdgeVerticesEssentiallyOnNonEdgeClauses()
  }
 
 void SATInstanceGenerator::addFivePointRuleClauses() {
-    for(Vertex aa=0;aa<numVertices();++aa) {
-        for(Vertex bb=aa+1;bb<numVertices();++bb) {
+    for(Vertex aa=0;aa<numVertices();++aa)
+        for(Vertex bb=0;bb<numVertices();++bb) {
             if(aa==bb) continue;
-            for(Vertex cc=bb+1;cc<numVertices();++cc) {
-                if(cc==aa || cc==bb) continue;
-                for(Vertex dd=cc+1;dd<numVertices();++dd) {
-                    if(dd==aa||dd==bb||dd==cc) continue;
+            for(Vertex cc=bb+1;cc<numVertices();++cc)
+                for(Vertex dd=cc+1;dd<numVertices();++dd)
                     for(Vertex ee=dd+1;ee<numVertices();++ee) {
-                        if(ee==aa||ee==bb||ee==cc||ee==dd)
-                            continue;
                         auto abc = variableForTriangle(aa,bb,cc);
                         auto abd = variableForTriangle(aa,bb,dd);
                         auto abe = variableForTriangle(aa,bb,ee);
@@ -94,25 +90,22 @@ void SATInstanceGenerator::addFivePointRuleClauses() {
                         auto ace = variableForTriangle(aa,cc,ee);
                         auto ade = variableForTriangle(aa,dd,ee);
 
-                        _sat.addClause({ abc, abd, abe, acd,-ace, ade,});
-                        _sat.addClause({ abc, abd, abe,-acd, ace,-ade,});
-                        _sat.addClause({ abc, abd,-abe, acd, ace,-ade,});
-                        _sat.addClause({ abc, abd,-abe,-acd,-ace, ade,});
-                        _sat.addClause({ abc,-abd, abe, acd, ace, ade,});
-                        _sat.addClause({ abc,-abd, abe,-acd,-ace,-ade,});
-                        _sat.addClause({ abc,-abd,-abe, acd,-ace,-ade,});
-                        _sat.addClause({ abc,-abd,-abe,-acd, ace, ade,});
-                        _sat.addClause({-abc, abd, abe, acd,-ace,-ade,});
-                        _sat.addClause({-abc, abd, abe,-acd, ace, ade,});
-                        _sat.addClause({-abc, abd,-abe, acd, ace, ade,});
-                        _sat.addClause({-abc, abd,-abe,-acd,-ace,-ade,});
-                        _sat.addClause({-abc,-abd, abe, acd, ace,-ade,});
-                        _sat.addClause({-abc,-abd, abe,-acd,-ace, ade,});
-                        _sat.addClause({-abc,-abd,-abe, acd,-ace, ade,});
-                        _sat.addClause({-abc,-abd,-abe,-acd, ace,-ade,});
+                        _sat.addClause({ abc, abd, abe, acd,-ace, ade});
+                        _sat.addClause({ abc, abd, abe,-acd, ace,-ade});
+                        _sat.addClause({ abc, abd,-abe, acd, ace,-ade});
+                        _sat.addClause({ abc, abd,-abe,-acd,-ace, ade});
+                        _sat.addClause({ abc,-abd, abe, acd, ace, ade});
+                        _sat.addClause({ abc,-abd, abe,-acd,-ace,-ade});
+                        _sat.addClause({ abc,-abd,-abe, acd,-ace,-ade});
+                        _sat.addClause({ abc,-abd,-abe,-acd, ace, ade});
+                        _sat.addClause({-abc, abd, abe, acd,-ace,-ade});
+                        _sat.addClause({-abc, abd, abe,-acd, ace, ade});
+                        _sat.addClause({-abc, abd,-abe, acd, ace, ade});
+                        _sat.addClause({-abc, abd,-abe,-acd,-ace,-ade});
+                        _sat.addClause({-abc,-abd, abe, acd, ace,-ade});
+                        _sat.addClause({-abc,-abd, abe,-acd,-ace, ade});
+                        _sat.addClause({-abc,-abd,-abe, acd,-ace, ade});
+                        _sat.addClause({-abc,-abd,-abe,-acd, ace,-ade});
                     }
-                }
-            }
         }
-    }
 }
