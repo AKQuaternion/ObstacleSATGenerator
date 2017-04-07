@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4973BE4D1E9811DD0066F131 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4973BE4C1E9811DD0066F131 /* main.cpp */; };
 		4973BE551E9812EE0066F131 /* Variable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4973BE531E9812EE0066F131 /* Variable.cpp */; };
+		497482561E982DED003C4F76 /* SATInstance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497482541E982DED003C4F76 /* SATInstance.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +29,8 @@
 		4973BE4C1E9811DD0066F131 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		4973BE531E9812EE0066F131 /* Variable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Variable.cpp; sourceTree = "<group>"; };
 		4973BE541E9812EE0066F131 /* Variable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Variable.hpp; sourceTree = "<group>"; };
+		497482541E982DED003C4F76 /* SATInstance.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SATInstance.cpp; sourceTree = "<group>"; };
+		497482551E982DED003C4F76 /* SATInstance.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SATInstance.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +66,8 @@
 				4973BE4C1E9811DD0066F131 /* main.cpp */,
 				4973BE531E9812EE0066F131 /* Variable.cpp */,
 				4973BE541E9812EE0066F131 /* Variable.hpp */,
+				497482541E982DED003C4F76 /* SATInstance.cpp */,
+				497482551E982DED003C4F76 /* SATInstance.hpp */,
 			);
 			path = ObstacleSATGenerator;
 			sourceTree = "<group>";
@@ -125,6 +130,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4973BE4D1E9811DD0066F131 /* main.cpp in Sources */,
+				497482561E982DED003C4F76 /* SATInstance.cpp in Sources */,
 				4973BE551E9812EE0066F131 /* Variable.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
