@@ -21,6 +21,13 @@ SATInstanceGenerator::SATInstanceGenerator(const Graph &g) :_g(g),_nextNonEdgeVe
     addNonEdgeVerticesEssentiallyOnNonEdgeClauses();
 }
 
+void SATInstanceGenerator::addNonEdgeVertices() {
+    for(int aa=0;aa<numRealVertices();++aa)
+        for(int bb=aa+1;bb<numRealVertices();++bb)
+            if (!_g.edge(aa, bb))
+                _nonEdgeVertexNumbers[make_pair(aa, bb)] =_nextNonEdgeVertexNumber++;
+}
+
 size_t SATInstanceGenerator::numRealVertices() const {
     return _g.numVerts();
 }
@@ -49,7 +56,7 @@ Vertex SATInstanceGenerator::vertexForNonEdge(Vertex a, Vertex b) {
     auto ne = make_pair(a,b);
     auto i = _nonEdgeVertexNumbers.find(ne);
     if (i == _nonEdgeVertexNumbers.end())
-        i = _nonEdgeVertexNumbers.insert(i,make_pair(ne,_nextNonEdgeVertexNumber++));
+        throw runtime_error("vvertexForNonEdge() called with unknown non-edge.");
     return i->second;
 }
 

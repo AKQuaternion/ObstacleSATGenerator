@@ -22,6 +22,7 @@ private:
     Variable variableSForNonEdge_ab(Vertex a, Vertex b) const;
     Vertex vertexForNonEdge(Vertex a, Vertex b);
 
+    void addNonEdgeVertices();
     void addNonEdgeVerticesEssentiallyOnNonEdgeClauses();
     void addFourPointRuleClauses();
     void addFivePointRuleClauses();
