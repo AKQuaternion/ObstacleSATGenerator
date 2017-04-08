@@ -65,7 +65,7 @@ static bool byFirstThenLast(const Path &l,const Path &r)
     else return l.front()<r.front();
 }
 
-PathGroup Graph::allPathsBetweenNonAdjacentVertices()
+PathGroup Graph::allPathsBetweenNonAdjacentVertices() const
 {
     PathGroup allPaths;
     for(int startVert=0;startVert<numVerts();++startVert)
