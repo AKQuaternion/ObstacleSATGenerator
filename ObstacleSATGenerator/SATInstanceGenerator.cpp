@@ -174,3 +174,8 @@ void SATInstanceGenerator::addNoInteriorObstacleNonEdgeClauses(){
     }
 }
 
+void SATInstanceGenerator::writeCNF(const string &filename) {
+    _sat.writeCNF(filename);
+}
+
+
