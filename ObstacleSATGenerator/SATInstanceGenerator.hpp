@@ -15,6 +15,10 @@
 class SATInstanceGenerator {
 public:
     SATInstanceGenerator(const Graph &g);
+    void addNonEdgeVertices();
+    void addFourPointRuleClauses();
+    void addFivePointRuleClauses();
+    void addNoInteriorObstacleNonEdgeClauses();
     
 private:
     Variable variableForTriangle(Vertex a, Vertex b, Vertex c) const;
@@ -22,11 +26,7 @@ private:
     Vertex vertexForNonEdge(Vertex a, Vertex b);
 
     bool adjacent(Vertex a, Vertex b) const;
-    void addNonEdgeVertices();
     void addNonEdgeVerticesEssentiallyOnNonEdgeClauses();
-    void addFourPointRuleClauses();
-    void addFivePointRuleClauses();
-    void addNoInteriorObstacleNonEdgeClauses();
     size_t numVertices() const;
     size_t numRealVertices() const;
 //    string nameFor(Vertex) const;
