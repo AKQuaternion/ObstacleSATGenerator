@@ -78,7 +78,7 @@ void SATInstanceGenerator::addNonEdgeVerticesEssentiallyOnNonEdgeClauses() {
             //aa,bb is a non-edge now
             auto zz = vertexForNonEdge(aa,bb);
             for(int xx=0;xx<numVertices();++xx) {
-                if (aa==xx||bb==xx)
+                if (xx==aa||xx==bb||xx==zz)
                     continue;
                 // axb -> axz and xbz
                 // -axb or (axz and xbz)
