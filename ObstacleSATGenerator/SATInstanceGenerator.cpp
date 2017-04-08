@@ -18,8 +18,7 @@ using std::swap;
 using std::make_pair;
 
 SATInstanceGenerator::SATInstanceGenerator(const Graph &g) :_g(g),_nextNonEdgeVertexNumber(g.numVerts()) {
-    addNonEdgeVertices(); //Always do this
-    addNonEdgeVerticesEssentiallyOnNonEdgeClauses();
+    addNonEdgeVertices();
 }
 
 void SATInstanceGenerator::addNonEdgeVertices() {
@@ -27,6 +26,7 @@ void SATInstanceGenerator::addNonEdgeVertices() {
         for(int bb=aa+1;bb<numRealVertices();++bb)
             if (!_g.edge(aa, bb))
                 _nonEdgeVertexNumbers[make_pair(aa, bb)] =_nextNonEdgeVertexNumber++;
+    addNonEdgeVerticesEssentiallyOnNonEdgeClauses();
 }
 
 size_t SATInstanceGenerator::numRealVertices() const {
