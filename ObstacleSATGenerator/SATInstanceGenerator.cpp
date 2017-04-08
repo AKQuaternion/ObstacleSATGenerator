@@ -53,25 +53,25 @@ Vertex SATInstanceGenerator::vertexForNonEdge(Vertex a, Vertex b) {
     return i->second;
 }
 
-void SATInstanceGenerator::addNonEdgeVerticesEssentiallyOnNonEdgeClauses()
-{
+void SATInstanceGenerator::addNonEdgeVerticesEssentiallyOnNonEdgeClauses() {
+//find all non-edge vertices first, then run these loops through those too!!!
     for(int aa=0;aa<numRealVertices();++aa)
         for(int bb=0;bb<numRealVertices();++bb) {
             if (aa==bb || _g.edge(aa,bb))
                 continue;
             //aa,bb is a non-edge now
             auto zz = vertexForNonEdge(aa,bb);
-            for(int cc=0;cc<numRealVertices();++cc) {
-                if (aa==cc||bb==cc)
+            for(int xx=0;xx<numRealVertices();++xx) {
+                if (aa==xx||bb==xx)
                     continue;
-                // abc -> abz and bcz
-                // -abc or (abz and bcz)
-                // (-abc or abz) and (-abc or bcz)
-                auto abc = variableForTriangle(aa, bb, cc);
-                auto abz = variableForTriangle(aa, bb, zz);
-                auto bcz = variableForTriangle(bb, cc, zz);
-                _sat.addClause({-abc,abz});
-                _sat.addClause({-abc,bcz});
+                // axb -> axz and xbz
+                // -axb or (axz and xbz)
+                // (-axb or axz) and (-axb or xbz)
+                auto axb = variableForTriangle(aa, xx, bb);
+                auto axz = variableForTriangle(aa, xx, zz);
+                auto xbz = variableForTriangle(xx, bb, zz);
+                _sat.addClause({-axb,axz});
+                _sat.addClause({-axb,xbz});
             }
         }
  }
