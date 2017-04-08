@@ -104,12 +104,12 @@ void SATInstanceGenerator::addNonEdgeVerticesEssentiallyOnNonEdgeClauses() {
  }
 
 void SATInstanceGenerator::addFivePointRuleClauses() {
-    for(Vertex aa=0;aa<numVertices();++aa)
-        for(Vertex bb=0;bb<numVertices();++bb) {
+    for(Vertex aa=0;aa<numRealVertices();++aa)
+        for(Vertex bb=0;bb<numRealVertices();++bb) {
             if(aa==bb) continue;
-            for(Vertex cc=bb+1;cc<numVertices();++cc) {
+            for(Vertex cc=bb+1;cc<numRealVertices();++cc) {
                 if(aa==cc) continue;
-                for(Vertex dd=cc+1;dd<numVertices();++dd) {
+                for(Vertex dd=cc+1;dd<numRealVertices();++dd) {
                     if(aa==dd) continue;
                     for(Vertex ee=dd+1;ee<numVertices();++ee) {
                         if(aa==ee) continue;
@@ -147,7 +147,7 @@ void SATInstanceGenerator::addFourPointRuleClauses() {
     for(Vertex aa=0;aa<numRealVertices();++aa)
         for(Vertex bb=aa+1;bb<numRealVertices();++bb)
             for(Vertex cc=bb+1;cc<numRealVertices();++cc)
-                for(Vertex dd=cc+1;dd<numRealVertices();++dd) {
+                for(Vertex dd=cc+1;dd<numVertices();++dd) {
                     
                     auto abc = variableForTriangle(aa,bb,cc);
                     auto abd = variableForTriangle(aa,bb,dd);
@@ -192,24 +192,20 @@ void SATInstanceGenerator::addNonEdgeVerticesNotInTriangleClauses()
 {
     //-abc V  azb V  bzc V  cza says "abc is counterclockwise, or (it's clockwise so) z is outsize of abc"
     // abc V -azb V -bzc V -cza
-    for(int aa=0;aa<_numVertices;++aa)
-        for(int bb=aa+1;bb<_numVertices;++bb)
-            for(int cc=bb+1;cc<_numVertices;++cc)
-                for(int zz=_numVertices; zz<_nonEdgeNumberCounter; ++zz)
+    for(int aa=0;aa<numRealVertices();++aa)
+        for(int bb=aa+1;bb<numRealVertices();++bb)
+            for(int cc=bb+1;cc<numRealVertices();++cc)
+                for(auto zz=numRealVertices(); zz<numVertices(); ++zz)
                 {
-                    if (!edge(aa,bb) || !edge(aa,cc) || !edge(bb,cc))
+                    if (!adjacent(aa,bb) || !adjacent(aa,cc) || !adjacent(bb,cc))
                         continue;
-                    
-                    vector<int> clause;
-                    clause.push_back(-numFor(aa,bb,cc));
-                    clause.push_back(numFor(aa,zz,bb));
-                    clause.push_back(numFor(bb,zz,cc));
-                    clause.push_back(numFor(cc,zz,aa));
-                    
-                    _cl.push_back(clause);
-                    for(size_t ii=0;ii<clause.size();++ii)
-                        clause[ii] *= -1;
-                    _cl.push_back(clause);
+                    auto abc = variableForTriangle(aa,bb,cc);
+                    auto azb = variableForTriangle(aa,zz,bb);
+                    auto bzc = variableForTriangle(bb,zz,cc);
+                    auto cza = variableForTriangle(cc,zz,aa);
+
+                    _sat.addClause({-abc,azb,bzc,cza});
+                    _sat.addClause(reflected({-abc,azb,bzc,cza}));
                 }
 }
 
