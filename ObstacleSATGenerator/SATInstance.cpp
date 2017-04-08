@@ -34,6 +34,14 @@ size_t SATInstance::numberFromVariable(const Variable &v) const {
         return i->second;
 }
 
+size_t SATInstance::numVariables() const{
+    return _variableNumbers.size();
+}
+
+size_t SATInstance::numClauses() const {
+    return _clauses.size();
+}
+
 void SATInstance::writeCNF(const string &filename) const{
     std::ofstream of(filename+".cnf");
     
