@@ -158,8 +158,11 @@ void SATInstanceGenerator::addNoInteriorObstacleNonEdgeClauses(){
     {
         for (const auto &path:_g.allInducedPaths())
         {
-            if (path.size() <= 2)
-                throw std::runtime_error("Oops, path too short in addNoInteriorObstacleNonEdgeClauses()");
+            if (path.size() == 1)
+                throw std::runtime_error("Oops, path of length 1 in addNoInteriorObstacleNonEdgeClauses()");
+            
+            if (path.size() == 2)
+                continue;
             
             auto aa = path.front();
             auto bb = path.back();
