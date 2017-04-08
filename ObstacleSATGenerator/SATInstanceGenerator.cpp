@@ -132,6 +132,12 @@ static Clause reflected(Clause c) {
     return c;
 }
 
+Variable SATInstanceGenerator::variableSForNonEdge_ab(Vertex a, Vertex b) const {
+    if(b>a)
+        return -variableSForNonEdge_ab(b, a);
+    return {"s{"+to_string(a)+","+to_string(b)+"}"};
+}
+
 void SATInstanceGenerator::addNoInteriorObstacleNonEdgeClauses(){
     {
         for (const auto &path:_g.allPathsBetweenNonAdjacentVertices())
@@ -141,7 +147,7 @@ void SATInstanceGenerator::addNoInteriorObstacleNonEdgeClauses(){
             
             auto aa = path.front();
             auto bb = path.back();
-            Variable sab("s{"+to_string(aa)+","+to_string(bb)+"}");
+            auto sab = variableSForNonEdge_ab(aa, bb);
 
             Clause c{sab};
             for(size_t ss=1;ss<path.size()-1;++ss)
