@@ -30,8 +30,8 @@ public:
     
 private:
     bool notAdjacentToAnyButLast(const Path &p, Vertex vert) const;
-    PathGroup allPathsFromVOfLengthIOrLess(Vertex v, size_t i);
-    void filterPathsIncreasing(PathGroup &paths);
+    PathGroup allPathsFromVOfLengthIOrLess(Vertex v, size_t i) const;
+    void filterPathsIncreasing(PathGroup &paths) const;
     
     std::vector<std::vector<int> > _adjacencies;
 };

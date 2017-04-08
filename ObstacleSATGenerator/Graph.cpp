@@ -83,12 +83,12 @@ static bool nonIncreasing(const Path & p)
     return p.back()<=p.front();
 }
 
-void Graph::filterPathsIncreasing(PathGroup &paths)
+void Graph::filterPathsIncreasing(PathGroup &paths) const
 {
     paths.erase(remove_if(paths.begin(),paths.end(),nonIncreasing),paths.end());
 }
 
-PathGroup Graph::allPathsFromVOfLengthIOrLess(Vertex v, size_t i) {
+PathGroup Graph::allPathsFromVOfLengthIOrLess(Vertex v, size_t i) const {
     if (i==0)
         return PathGroup(1,Path(1,v)); //one path with just v on it
     
