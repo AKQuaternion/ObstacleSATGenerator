@@ -18,6 +18,7 @@ using std::swap;
 using std::make_pair;
 
 SATInstanceGenerator::SATInstanceGenerator(const Graph &g) :_g(g),_nextNonEdgeVertexNumber(g.numVerts()) {
+    addNonEdgeVertices(); //Always do this
     addNonEdgeVerticesEssentiallyOnNonEdgeClauses();
 }
 
@@ -34,6 +35,13 @@ size_t SATInstanceGenerator::numRealVertices() const {
 
 size_t SATInstanceGenerator::numVertices() const {
     return _nextNonEdgeVertexNumber;
+}
+
+bool SATInstanceGenerator::adjacent(Vertex a, Vertex b) const {
+    if (a >= numRealVertices() || b >= numRealVertices())
+        return false;
+    else
+        return _g.edge(a,b);
 }
 
 Variable SATInstanceGenerator::variableForTriangle(Vertex a, Vertex b, Vertex c) const {
@@ -61,14 +69,13 @@ Vertex SATInstanceGenerator::vertexForNonEdge(Vertex a, Vertex b) {
 }
 
 void SATInstanceGenerator::addNonEdgeVerticesEssentiallyOnNonEdgeClauses() {
-//find all non-edge vertices first, then run these loops through those too!!!
     for(int aa=0;aa<numRealVertices();++aa)
         for(int bb=0;bb<numRealVertices();++bb) {
-            if (aa==bb || _g.edge(aa,bb))
+            if (aa==bb || adjacent(aa,bb))
                 continue;
             //aa,bb is a non-edge now
             auto zz = vertexForNonEdge(aa,bb);
-            for(int xx=0;xx<numRealVertices();++xx) {
+            for(int xx=0;xx<numVertices();++xx) {
                 if (aa==xx||bb==xx)
                     continue;
                 // axb -> axz and xbz

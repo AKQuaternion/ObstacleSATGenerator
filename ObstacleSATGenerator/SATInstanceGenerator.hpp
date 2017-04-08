@@ -15,13 +15,13 @@
 class SATInstanceGenerator {
 public:
     SATInstanceGenerator(const Graph &g);
-
     
 private:
     Variable variableForTriangle(Vertex a, Vertex b, Vertex c) const;
     Variable variableSForNonEdge_ab(Vertex a, Vertex b) const;
     Vertex vertexForNonEdge(Vertex a, Vertex b);
 
+    bool adjacent(Vertex a, Vertex b) const;
     void addNonEdgeVertices();
     void addNonEdgeVerticesEssentiallyOnNonEdgeClauses();
     void addFourPointRuleClauses();
@@ -36,6 +36,5 @@ private:
     Vertex _nextNonEdgeVertexNumber;
     std::map<std::pair<Vertex,Vertex>,Vertex> _nonEdgeVertexNumbers;
 };
-
 
 #endif /* SATInstanceGenerator_hpp */
