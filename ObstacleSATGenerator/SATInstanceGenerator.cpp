@@ -156,7 +156,7 @@ Variable SATInstanceGenerator::variableSForNonEdge_ab(Vertex a, Vertex b) const 
 
 void SATInstanceGenerator::addNoInteriorObstacleNonEdgeClauses(){
     {
-        for (const auto &path:_g.allPathsBetweenNonAdjacentVertices())
+        for (const auto &path:_g.allInducedPaths())
         {
             if (path.size() <= 2)
                 throw std::runtime_error("Oops, path too short in addNoInteriorObstacleNonEdgeClauses()");

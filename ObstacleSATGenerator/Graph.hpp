@@ -22,10 +22,9 @@ class Graph
     friend std::ostream & operator <<(std::ostream & os, const Graph & g);
     
 public:
-    
     Graph(const std::string &fname);
     size_t numVerts() const;
-    PathGroup allPathsBetweenNonAdjacentVertices() const;
+    PathGroup allInducedPaths() const;
     bool edge(Vertex i, Vertex j) const;
     
 private:

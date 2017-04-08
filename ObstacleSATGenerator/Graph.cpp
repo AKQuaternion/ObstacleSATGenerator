@@ -65,7 +65,7 @@ static bool byFirstThenLast(const Path &l,const Path &r)
     else return l.front()<r.front();
 }
 
-PathGroup Graph::allPathsBetweenNonAdjacentVertices() const
+PathGroup Graph::allInducedPaths() const
 {
     PathGroup allPaths;
     for(int startVert=0;startVert<numVerts();++startVert)
@@ -74,7 +74,7 @@ PathGroup Graph::allPathsBetweenNonAdjacentVertices() const
         filterPathsIncreasing(paths);
         allPaths.insert(allPaths.end(),paths.begin(),paths.end());
     }
-    sort(allPaths.begin(),allPaths.end(),byFirstThenLast);
+    sort(allPaths.begin(),allPaths.end(),byFirstThenLast); //!!! Is this necessary?
     return allPaths;
 }
 
