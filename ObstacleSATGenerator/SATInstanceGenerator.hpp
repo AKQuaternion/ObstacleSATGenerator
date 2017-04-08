@@ -19,7 +19,9 @@ public:
     void addFourPointRuleClauses();
     void addFivePointRuleClauses();
     void addNoInteriorObstacleNonEdgeClauses();
+    void addNonEdgeVerticesNotInTriangleClauses();
     void writeCNF(const std::string &filename);
+    void show() const;
     
 private:
     Variable variableForTriangle(Vertex a, Vertex b, Vertex c) const;

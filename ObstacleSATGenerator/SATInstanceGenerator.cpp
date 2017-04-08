@@ -16,9 +16,17 @@ using std::to_string;
 using std::swap;
 #include <utility>
 using std::make_pair;
+#include <iostream>
+using std::cout;
+using std::endl;
+
+static Clause reflected(Clause c) {
+    for(auto &v:c)
+        v = -v;
+    return c;
+}
 
 SATInstanceGenerator::SATInstanceGenerator(const Graph &g) :_g(g),_nextNonEdgeVertexNumber(g.numVerts()) {
-    addNonEdgeVertices();
 }
 
 void SATInstanceGenerator::addNonEdgeVertices() {
@@ -72,12 +80,12 @@ void SATInstanceGenerator::addNonEdgeVerticesEssentiallyOnNonEdgeClauses() {
     if (numRealVertices()==numVertices())
         std::cout << "You almost surely want to call addNonEdgeVertices() before calling addNonEdgeVerticesEssentiallyOnNonEdgeClauses()" << std::endl;
     for(int aa=0;aa<numRealVertices();++aa)
-        for(int bb=0;bb<numRealVertices();++bb) {
+        for(int bb=aa+1;bb<numRealVertices();++bb) {
             if (aa==bb || adjacent(aa,bb))
                 continue;
             //aa,bb is a non-edge now
             auto zz = vertexForNonEdge(aa,bb);
-            for(int xx=0;xx<numVertices();++xx) {
+            for(int xx=0;xx<numRealVertices();++xx) {
                 if (xx==aa||xx==bb||xx==zz)
                     continue;
                 // axb -> axz and xbz
@@ -88,6 +96,9 @@ void SATInstanceGenerator::addNonEdgeVerticesEssentiallyOnNonEdgeClauses() {
                 auto xbz = variableForTriangle(xx, bb, zz);
                 _sat.addClause({-axb,axz});
                 _sat.addClause({-axb,xbz});
+
+                _sat.addClause(reflected({-axb,axz}));
+                _sat.addClause(reflected({-axb,xbz}));
             }
         }
  }
@@ -133,10 +144,10 @@ void SATInstanceGenerator::addFivePointRuleClauses() {
 }
 
 void SATInstanceGenerator::addFourPointRuleClauses() {
-    for(Vertex aa=0;aa<numVertices();++aa)
-        for(Vertex bb=aa+1;bb<numVertices();++bb)
-            for(Vertex cc=bb+1;cc<numVertices();++cc)
-                for(Vertex dd=cc+1;dd<numVertices();++dd) {
+    for(Vertex aa=0;aa<numRealVertices();++aa)
+        for(Vertex bb=aa+1;bb<numRealVertices();++bb)
+            for(Vertex cc=bb+1;cc<numRealVertices();++cc)
+                for(Vertex dd=cc+1;dd<numRealVertices();++dd) {
                     
                     auto abc = variableForTriangle(aa,bb,cc);
                     auto abd = variableForTriangle(aa,bb,dd);
@@ -146,12 +157,6 @@ void SATInstanceGenerator::addFourPointRuleClauses() {
                     _sat.addClause({ abc,-abd, acd,-bcd,});
                     _sat.addClause({-abc, abd,-acd, bcd,});
                 }
-}
-
-static Clause reflected(Clause c) {
-    for(auto &v:c)
-        v = -v;
-    return c;
 }
 
 Variable SATInstanceGenerator::variableSForNonEdge_ab(Vertex a, Vertex b) const {
@@ -183,8 +188,35 @@ void SATInstanceGenerator::addNoInteriorObstacleNonEdgeClauses(){
     }
 }
 
+void SATInstanceGenerator::addNonEdgeVerticesNotInTriangleClauses()
+{
+    //-abc V  azb V  bzc V  cza says "abc is counterclockwise, or (it's clockwise so) z is outsize of abc"
+    // abc V -azb V -bzc V -cza
+    for(int aa=0;aa<_numVertices;++aa)
+        for(int bb=aa+1;bb<_numVertices;++bb)
+            for(int cc=bb+1;cc<_numVertices;++cc)
+                for(int zz=_numVertices; zz<_nonEdgeNumberCounter; ++zz)
+                {
+                    if (!edge(aa,bb) || !edge(aa,cc) || !edge(bb,cc))
+                        continue;
+                    
+                    vector<int> clause;
+                    clause.push_back(-numFor(aa,bb,cc));
+                    clause.push_back(numFor(aa,zz,bb));
+                    clause.push_back(numFor(bb,zz,cc));
+                    clause.push_back(numFor(cc,zz,aa));
+                    
+                    _cl.push_back(clause);
+                    for(size_t ii=0;ii<clause.size();++ii)
+                        clause[ii] *= -1;
+                    _cl.push_back(clause);
+                }
+}
+
 void SATInstanceGenerator::writeCNF(const string &filename) {
     _sat.writeCNF(filename);
 }
 
-
+void SATInstanceGenerator::show() const {
+    std::cout << _sat.numClauses() << std::endl;
+}
