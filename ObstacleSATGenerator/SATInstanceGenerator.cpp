@@ -125,3 +125,30 @@ void SATInstanceGenerator::addFourPointRuleClauses() {
                     _sat.addClause({-abc, abd,-acd, bcd,});
                 }
 }
+
+static Clause reflected(Clause c) {
+    for(auto &v:c)
+        v = -v;
+    return c;
+}
+
+void SATInstanceGenerator::addNoInteriorObstacleNonEdgeClauses(){
+    {
+        for (const auto &path:_g.allPathsBetweenNonAdjacentVertices())
+        {
+            if (path.size() <= 2)
+                throw std::runtime_error("Oops, path too short in addNoInteriorObstacleNonEdgeClauses()");
+            
+            auto aa = path.front();
+            auto bb = path.back();
+            Variable sab("s{"+to_string(aa)+","+to_string(bb)+"}");
+
+            Clause c{sab};
+            for(size_t ss=1;ss<path.size()-1;++ss)
+                c.push_back(variableForTriangle(aa, bb, path[ss]));
+            _sat.addClause(c);
+            _sat.addClause(reflected(c));
+        }
+    }
+}
+

@@ -24,6 +24,7 @@ private:
     void addNonEdgeVerticesEssentiallyOnNonEdgeClauses();
     void addFourPointRuleClauses();
     void addFivePointRuleClauses();
+    void addNoInteriorObstacleNonEdgeClauses();
     size_t numVertices() const;
     size_t numRealVertices() const;
 //    string nameFor(Vertex) const;
