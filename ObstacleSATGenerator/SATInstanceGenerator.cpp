@@ -109,3 +109,19 @@ void SATInstanceGenerator::addFivePointRuleClauses() {
                     }
         }
 }
+
+void SATInstanceGenerator::addFourPointRuleClauses() {
+    for(Vertex aa=0;aa<numVertices();++aa)
+        for(Vertex bb=aa+1;bb<numVertices();++bb)
+            for(Vertex cc=bb+1;cc<numVertices();++cc)
+                for(Vertex dd=cc+1;dd<numVertices();++dd) {
+                    
+                    auto abc = variableForTriangle(aa,bb,cc);
+                    auto abd = variableForTriangle(aa,bb,dd);
+                    auto acd = variableForTriangle(aa,cc,dd);
+                    auto bcd = variableForTriangle(bb,cc,dd);
+                    
+                    _sat.addClause({ abc,-abd, acd,-bcd,});
+                    _sat.addClause({-abc, abd,-acd, bcd,});
+                }
+}

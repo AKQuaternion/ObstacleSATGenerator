@@ -22,6 +22,7 @@ private:
     Vertex vertexForNonEdge(Vertex a, Vertex b);
 
     void addNonEdgeVerticesEssentiallyOnNonEdgeClauses();
+    void addFourPointRuleClauses();
     void addFivePointRuleClauses();
     size_t numVertices() const;
     size_t numRealVertices() const;
