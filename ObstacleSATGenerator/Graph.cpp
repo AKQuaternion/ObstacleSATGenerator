@@ -123,7 +123,7 @@ std::ostream & operator <<(std::ostream & os, const Graph & g)
     
     for(int ii=0;ii<g.numVerts();++ii)
     {
-        os << std::setw(3) << ii;
+        os << std::setw(3) << ii << " ";
         for(int jj=0;jj<g.numVerts();++jj)
             os << g._adjacencies[ii][jj] << "  ";
         os << std::endl;
