@@ -69,6 +69,8 @@ Vertex SATInstanceGenerator::vertexForNonEdge(Vertex a, Vertex b) {
 }
 
 void SATInstanceGenerator::addNonEdgeVerticesEssentiallyOnNonEdgeClauses() {
+    if (numRealVertices()==numVertices())
+        std::cout << "You almost surely want to call addNonEdgeVertices() before calling addNonEdgeVerticesEssentiallyOnNonEdgeClauses()" << std::endl;
     for(int aa=0;aa<numRealVertices();++aa)
         for(int bb=0;bb<numRealVertices();++bb) {
             if (aa==bb || adjacent(aa,bb))
