@@ -159,10 +159,20 @@ void SATInstanceGenerator::addFourPointRuleClauses() {
                 }
 }
 
-Variable SATInstanceGenerator::variableSForNonEdge_ab(Vertex a, Vertex b) const {
+Variable SATInstanceGenerator::variableForsab(Vertex a, Vertex b) const {
     if(b>a)
-        return -variableSForNonEdge_ab(b, a);
+        return -variableForsab(b, a);
     return {"s{"+to_string(a)+","+to_string(b)+"}"};
+}
+
+Variable SATInstanceGenerator::variableForkPcd(const Path &path, Vertex cc,Vertex dd) const{
+    return {"k_"+toString(path)+",{" + to_string(cc) + "," + to_string(dd) +"}"};
+}
+
+Variable SATInstanceGenerator::variableForsabcd(Vertex a, Vertex b, Vertex c, Vertex d) const {
+    if(b>a)
+        return -variableForsabcd(b, a, c, d);
+    return {"s{"+to_string(a)+","+to_string(b)+","+to_string(c) + "," + to_string(d) +"}"};
 }
 
 void SATInstanceGenerator::addNoInteriorObstacleNonEdgeClauses(){
@@ -177,13 +187,43 @@ void SATInstanceGenerator::addNoInteriorObstacleNonEdgeClauses(){
             
             auto aa = path.front();
             auto bb = path.back();
-            auto sab = variableSForNonEdge_ab(aa, bb);
+            auto sab = variableForsab(aa, bb);
 
             Clause c{sab};
             for(size_t ss=1;ss<path.size()-1;++ss)
                 c.push_back(variableForTriangle(aa, bb, path[ss]));
             _sat.addClause(c);
             _sat.addClause(reflected(c));
+        }
+    }
+}
+
+void SATInstanceGenerator::addNoSingleObstacleNonEdgeClauses(){
+    {
+        for (const auto &path:_g.allInducedPaths())
+        {
+            if (path.size() == 1)
+                throw std::runtime_error("Oops, path of length 1 in addNoInteriorObstacleNonEdgeClauses()");
+            
+            if (path.size() == 2)
+                continue;
+            
+            auto aa = path.front();
+            auto bb = path.back();
+            for(Vertex cc=0;cc<numRealVertices();++cc)
+                for(Vertex dd=cc+1;dd<numRealVertices();++dd)  {//!!!Consider using numVertices() here?
+                    if(adjacent(cc, dd))
+                        continue;
+                    if(aa==cc && bb==dd)
+                        continue;
+                    auto kPcd = variableForkPcd(path,cc,dd);
+                    // build and add clauses (6) and (7)
+                    auto s_abcd = variableForsabcd(aa,bb,cc,dd); //discuss with Glenn, what is canonical here? !!!
+                    //(Should be negated if a,b flipped, no change for c,d, yes?
+                    
+                    // build and add clauses (8) and (9)
+                    
+                }
         }
     }
 }
