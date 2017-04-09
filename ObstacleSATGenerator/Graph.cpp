@@ -14,6 +14,8 @@ using std::vector;
 using std::cout;
 using std::endl;
 #include <iomanip>
+#include <sstream>
+using std::ostringstream;
 
 Graph::Graph(const std::string & fname)
 {
@@ -142,4 +144,13 @@ void printPathGroup(const PathGroup &pg)
 }
 
 
-
+std::string toString(const Path &path)
+{
+    ostringstream os;
+    os << "[";
+    for (auto v : path)
+        os << v << ",";
+    os.seekp(-1, std::ios_base::cur);
+    os << "]";
+    return os.str();
+}

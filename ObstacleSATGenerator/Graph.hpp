@@ -37,5 +37,5 @@ private:
 
 std::ostream & operator<<(std::ostream &, const Graph & g);
 void printPathGroup(const PathGroup &pl);
-
+std::string toString(const Path &p);
 #endif /* GRAPH_H_ */
