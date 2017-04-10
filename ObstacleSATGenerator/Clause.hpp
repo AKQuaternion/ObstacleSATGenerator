@@ -12,11 +12,13 @@
 #include <vector>
 
 class Clause {
+    friend Clause & operator+=(Clause &lhs, const Clause &rhs);
 public:
 //    template<typename... Args> Clause(Args&&... args): _variables(std::forward<Args>(args)...) {}
     Clause() = default;
     Clause(std::initializer_list<Variable> v) :_variables(v) {}
-    Clause & add(Variable v);
+    Clause(Variable v):_variables{std::move(v)} {};
+    Clause & add(Variable v); //TODO: Deprecate, just call +=?
     Clause reflected() const;
     auto begin() {return _variables.begin();}
     auto begin() const  {return _variables.begin();}
@@ -25,6 +27,7 @@ public:
 private:
     std::vector<Variable> _variables;
 };
-Clause & operator+=(Clause &lhs, Variable v);
-Clause operator+(Clause lhs, Variable v);
+
+Clause operator+(Clause lhs, const Clause &rhs);
+
 #endif /* Clause_hpp */

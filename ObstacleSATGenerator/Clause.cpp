@@ -15,12 +15,13 @@ Clause & Clause::add(Variable v) {
     return *this;
 }
 
-Clause & operator+=(Clause &lhs, Variable v){
-    return lhs.add(move(v));
+Clause & operator+=(Clause &lhs, const Clause &rhs){
+    lhs._variables.insert(lhs._variables.end(),rhs.begin(),rhs.end());
+    return lhs;
 }
 
-Clause operator+(Clause lhs, Variable v){
-    return lhs+=move(v);
+Clause operator+(Clause lhs, const Clause &rhs){
+    return lhs+=rhs;
 }
 
 Clause Clause::reflected() const {
@@ -29,4 +30,3 @@ Clause Clause::reflected() const {
         v = -v;
     return ref;
 }
-

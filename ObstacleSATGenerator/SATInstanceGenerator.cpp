@@ -218,8 +218,8 @@ void SATInstanceGenerator::addClauses8and9(const Path &p, Vertex c, Vertex d) {
         pathPart += variableForTriangle(a, b, v);
     auto s_abcd = variableForsabcd(a,b,c,d);
     auto kPcd = variableForkPcd(p,c,d);
-    auto c8 = pathPart + -kPcd + -s_abcd;
-    auto c9 = pathPart.reflected() + -kPcd + s_abcd;
+    auto c8 = -kPcd + -s_abcd + pathPart;
+    auto c9 = -kPcd + s_abcd + pathPart;
     _sat.addClause(c8);
     _sat.addClause(c9);
 }
