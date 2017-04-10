@@ -176,15 +176,7 @@ Variable SATInstanceGenerator::variableForsabcd(Vertex a, Vertex b, Vertex c, Ve
 }
 
 void SATInstanceGenerator::addNoInteriorObstacleNonEdgeClauses(){
-    {
-        for (const auto &path:_g.allInducedPaths())
-        {
-            if (path.size() == 1)
-                throw std::runtime_error("Oops, path of length 1 in addNoInteriorObstacleNonEdgeClauses()");
-            
-            if (path.size() == 2)
-                continue;
-            
+        for (const auto &path:_g.allInducedPaths()) {// paths are lexicographically sorted by first then last vertex
             auto aa = path.front();
             auto bb = path.back();
             auto sab = variableForsab(aa, bb);
@@ -195,32 +187,19 @@ void SATInstanceGenerator::addNoInteriorObstacleNonEdgeClauses(){
             _sat.addClause(c);
             _sat.addClause(reflected(c));
         }
-    }
 }
 
 void SATInstanceGenerator::addNoSingleObstacleNonEdgeClauses(){
-    {
-        for (const auto &path:_g.allInducedPaths())
-        {//paths are lexicographically sorted by first then last with first<last.
-            if (path.size() == 1)
-                throw std::runtime_error("Oops, path of length 1 in addNoInteriorObstacleNonEdgeClauses()");
-            
-            if (path.size() == 2) //!!! We should get rid of these cases from allInducedPaths()
-                continue;
-            
-            auto aa = path.front();
-            auto bb = path.back();
-            for(Vertex cc=0;cc<numRealVertices();++cc)
-                for(Vertex dd=cc+1;dd<numRealVertices();++dd)  {//!!!Consider using numVertices() here?
-                    if(adjacent(cc, dd))
-                        continue;
-                    if(aa==cc && bb==dd) //Note aa<bb and cc<dd
-                        continue;
-                    addClauses6and7(path, cc, dd);
-                    addClauses8and9(path, cc, dd);
-                    
-                }
-        }
+    for (const auto &path:_g.allInducedPaths()) {// paths are lexicographically sorted by first then last vertex with first<last.
+        auto aa = path.front();
+        auto bb = path.back();
+        for(Vertex cc=0;cc<numRealVertices();++cc)
+            for(Vertex dd=cc+1;dd<numRealVertices();++dd)  {//TODO: Consider using numVertices() here? Ask Glenn.
+                if(adjacent(cc, dd) || (aa==cc && bb==dd))
+                    continue;
+                addClauses6and7(path, cc, dd);
+                addClauses8and9(path, cc, dd);
+            }
     }
 }
 
@@ -237,11 +216,10 @@ void SATInstanceGenerator::addClauses6and7(const Path &p, Vertex c, Vertex d) {
 }
 
 void SATInstanceGenerator::addClauses8and9(const Path &p, Vertex c, Vertex d) {
-    //!!!
-    auto s_abcd = variableForsabcd(p.front(),p.back(),c,d); //discuss with Glenn, what is canonical here? !!!
+    auto s_abcd = variableForsabcd(p.front(),p.back(),c,d); //TODO:: discuss with Glenn, what is canonical here?
     //(Should be negated if a,b flipped, no change for c,d, yes?
     
-    // build and add clauses (8) and (9)
+    //TODO: build and add clauses (8) and (9)
 
 }
 
