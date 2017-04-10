@@ -210,11 +210,17 @@ void SATInstanceGenerator::addClauses6and7(const Path &p, Vertex c, Vertex d) {
 }
 
 void SATInstanceGenerator::addClauses8and9(const Path &p, Vertex c, Vertex d) {
-    auto s_abcd = variableForsabcd(p.front(),p.back(),c,d); //TODO:: discuss with Glenn, what is canonical here?
-    //(Should be negated if a,b flipped, no change for c,d, yes?
-    
-    //TODO: build and add clauses (8) and (9)
-
+    auto a = p.front();
+    auto b = p.back();
+    Clause pathPart;
+    for (int v=1;v<p.size()-1;++v)
+        pathPart += variableForTriangle(a, b, p[v]);
+    auto s_abcd = variableForsabcd(a,b,c,d);
+    auto kPcd = variableForkPcd(p,c,d);
+    auto c8 = pathPart + -kPcd + -s_abcd;
+    auto c9 = pathPart.reflected() + -kPcd + s_abcd;
+    _sat.addClause(c8);
+    _sat.addClause(c9);
 }
 
 void SATInstanceGenerator::addNonEdgeVerticesNotInTriangleClauses() {
