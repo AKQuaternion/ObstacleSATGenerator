@@ -10,6 +10,7 @@
 #define SATInstanceGenerator_hpp
 #include "Graph.hpp"
 #include "SATInstance.hpp"
+
 #include <string>
 
 class SATInstanceGenerator {

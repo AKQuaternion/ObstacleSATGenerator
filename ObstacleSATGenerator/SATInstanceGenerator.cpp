@@ -7,6 +7,7 @@
 //
 
 #include "SATInstanceGenerator.hpp"
+#include "RangeUtilities.hpp"
 #include <stdexcept>
 using std::runtime_error;
 #include <string>
@@ -177,7 +178,7 @@ void SATInstanceGenerator::addNoInteriorObstacleNonEdgeClauses(){
             auto sab = variableForsab(aa, bb);
 
             Clause c{sab};
-            for(size_t ss=1;ss<path.size()-1;++ss)
+            for(auto ss:interior(path))
                 c.add(variableForTriangle(aa, bb, path[ss]));
             _sat.addClause(c);
             _sat.addClause(c.reflected());
@@ -213,8 +214,8 @@ void SATInstanceGenerator::addClauses8and9(const Path &p, Vertex c, Vertex d) {
     auto a = p.front();
     auto b = p.back();
     Clause pathPart;
-    for (int v=1;v<p.size()-1;++v)
-        pathPart += variableForTriangle(a, b, p[v]);
+    for (auto v:interior(p))
+        pathPart += variableForTriangle(a, b, v);
     auto s_abcd = variableForsabcd(a,b,c,d);
     auto kPcd = variableForkPcd(p,c,d);
     auto c8 = pathPart + -kPcd + -s_abcd;
@@ -229,8 +230,7 @@ void SATInstanceGenerator::addNonEdgeVerticesNotInTriangleClauses() {
     for(int aa=0;aa<numRealVertices();++aa)
         for(int bb=aa+1;bb<numRealVertices();++bb)
             for(int cc=bb+1;cc<numRealVertices();++cc)
-                for(auto zz=numRealVertices(); zz<numVertices(); ++zz)
-                {
+                for(auto zz=numRealVertices(); zz<numVertices(); ++zz) {
                     if (!adjacent(aa,bb) || !adjacent(aa,cc) || !adjacent(bb,cc))
                         continue;
                     auto abc = variableForTriangle(aa,bb,cc);
