@@ -73,21 +73,21 @@ PathGroup Graph::allInducedPaths() const
     for(int startVert=0;startVert<numVerts();++startVert)
     {
         PathGroup paths = allPathsFromVOfLengthIOrLess(startVert,numVerts());
-        filterPathsIncreasing(paths);
+        filterPathsIncreasingAndMoreThanTwoVertices(paths);
         allPaths.insert(allPaths.end(),paths.begin(),paths.end());
     }
-    sort(allPaths.begin(),allPaths.end(),byFirstThenLast); //!!! Is this necessary?
+    sort(allPaths.begin(),allPaths.end(),byFirstThenLast);
     return allPaths;
 }
 
-static bool nonIncreasing(const Path & p)
+static bool nonIncreasingOrLessThan3Vertices(const Path & p)
 {
-    return p.back()<=p.front();
+    return p.back()<=p.front() || p.size() < 3;
 }
 
-void Graph::filterPathsIncreasing(PathGroup &paths) const
+void Graph::filterPathsIncreasingAndMoreThanTwoVertices(PathGroup &paths) const
 {
-    paths.erase(remove_if(paths.begin(),paths.end(),nonIncreasing),paths.end());
+    paths.erase(remove_if(paths.begin(),paths.end(),nonIncreasingOrLessThan3Vertices),paths.end());
 }
 
 PathGroup Graph::allPathsFromVOfLengthIOrLess(Vertex v, size_t i) const {
