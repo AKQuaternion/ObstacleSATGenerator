@@ -15,8 +15,7 @@
 #include <stddef.h>
 
 #include "Variable.hpp"
-
-using Clause = std::vector<Variable>;
+#include "Clause.hpp"
 
 class SATInstance {
 public:

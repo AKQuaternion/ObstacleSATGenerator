@@ -20,12 +20,6 @@ using std::make_pair;
 using std::cout;
 using std::endl;
 
-static Clause reflected(Clause c) {
-    for(auto &v:c)
-        v = -v;
-    return c;
-}
-
 SATInstanceGenerator::SATInstanceGenerator(const Graph &g) :_g(g),_nextNonEdgeVertexNumber(g.numVerts()) {
 }
 
@@ -81,9 +75,8 @@ void SATInstanceGenerator::addNonEdgeVerticesEssentiallyOnNonEdgeClauses() {
         std::cout << "You almost surely want to call addNonEdgeVertices() before calling addNonEdgeVerticesEssentiallyOnNonEdgeClauses()" << std::endl;
     for(int aa=0;aa<numRealVertices();++aa)
         for(int bb=aa+1;bb<numRealVertices();++bb) {
-            if (aa==bb || adjacent(aa,bb))
+            if (adjacent(aa,bb))
                 continue;
-            //aa,bb is a non-edge now
             auto zz = vertexForNonEdge(aa,bb);
             for(int xx=0;xx<numRealVertices();++xx) {
                 if (xx==aa||xx==bb||xx==zz)
@@ -96,9 +89,9 @@ void SATInstanceGenerator::addNonEdgeVerticesEssentiallyOnNonEdgeClauses() {
                 auto xbz = variableForTriangle(xx, bb, zz);
                 _sat.addClause({-axb,axz});
                 _sat.addClause({-axb,xbz});
-
-                _sat.addClause(reflected({-axb,axz}));
-                _sat.addClause(reflected({-axb,xbz}));
+                //then add the reflections
+                _sat.addClause({axb,-axz});
+                _sat.addClause({axb,-xbz});
             }
         }
  }
@@ -173,6 +166,8 @@ Variable SATInstanceGenerator::variableForsabcd(Vertex a, Vertex b, Vertex c, Ve
     if(b>a)
         return -variableForsabcd(b, a, c, d);
     return {"s{"+to_string(a)+","+to_string(b)+","+to_string(c) + "," + to_string(d) +"}"};
+    //TODO:: discuss with Glenn, what is canonical here?
+    //(Should be negated if a,b flipped, no change for c,d, yes?
 }
 
 void SATInstanceGenerator::addNoInteriorObstacleNonEdgeClauses(){
@@ -183,9 +178,9 @@ void SATInstanceGenerator::addNoInteriorObstacleNonEdgeClauses(){
 
             Clause c{sab};
             for(size_t ss=1;ss<path.size()-1;++ss)
-                c.push_back(variableForTriangle(aa, bb, path[ss]));
+                c.add(variableForTriangle(aa, bb, path[ss]));
             _sat.addClause(c);
-            _sat.addClause(reflected(c));
+            _sat.addClause(c.reflected());
         }
 }
 
@@ -204,13 +199,12 @@ void SATInstanceGenerator::addNoSingleObstacleNonEdgeClauses(){
 }
 
 void SATInstanceGenerator::addClauses6and7(const Path &p, Vertex c, Vertex d) {
-    auto kPcd = variableForkPcd(p,c,d);
-    Clause c6;
+    Clause pathPart;
     for (auto v:p)
-        c6.push_back(variableForTriangle(c, d, v));
-    Clause c7{reflected(c6)};
-    c6.push_back(kPcd);
-    c7.push_back(kPcd);
+        pathPart += variableForTriangle(c, d, v);
+    auto kPcd = variableForkPcd(p,c,d);
+    auto c6 = pathPart + kPcd;
+    auto c7 = pathPart.reflected() + kPcd;
     _sat.addClause(c6);
     _sat.addClause(c7);
 }
@@ -223,8 +217,7 @@ void SATInstanceGenerator::addClauses8and9(const Path &p, Vertex c, Vertex d) {
 
 }
 
-void SATInstanceGenerator::addNonEdgeVerticesNotInTriangleClauses()
-{
+void SATInstanceGenerator::addNonEdgeVerticesNotInTriangleClauses() {
     //-abc V  azb V  bzc V  cza says "abc is counterclockwise, or (it's clockwise so) z is outsize of abc"
     // abc V -azb V -bzc V -cza
     for(int aa=0;aa<numRealVertices();++aa)
@@ -239,8 +232,9 @@ void SATInstanceGenerator::addNonEdgeVerticesNotInTriangleClauses()
                     auto bzc = variableForTriangle(bb,zz,cc);
                     auto cza = variableForTriangle(cc,zz,aa);
 
-                    _sat.addClause({-abc,azb,bzc,cza});
-                    _sat.addClause(reflected({-abc,azb,bzc,cza}));
+                    Clause c({-abc,azb,bzc,cza});
+                    _sat.addClause(c);
+                    _sat.addClause(c.reflected());
                 }
 }
 
