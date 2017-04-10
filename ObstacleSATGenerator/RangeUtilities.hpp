@@ -17,7 +17,7 @@ public:
     {}
     auto begin() {
         auto newBegin {_t.begin()};
-        --newBegin;
+        ++newBegin;
         return newBegin;
     }
     
