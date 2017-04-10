@@ -201,11 +201,11 @@ void SATInstanceGenerator::addNoInteriorObstacleNonEdgeClauses(){
 void SATInstanceGenerator::addNoSingleObstacleNonEdgeClauses(){
     {
         for (const auto &path:_g.allInducedPaths())
-        {
+        {//paths are lexicographically sorted by first then last with first<last.
             if (path.size() == 1)
                 throw std::runtime_error("Oops, path of length 1 in addNoInteriorObstacleNonEdgeClauses()");
             
-            if (path.size() == 2)
+            if (path.size() == 2) //!!! We should get rid of these cases from allInducedPaths()
                 continue;
             
             auto aa = path.front();
@@ -214,18 +214,35 @@ void SATInstanceGenerator::addNoSingleObstacleNonEdgeClauses(){
                 for(Vertex dd=cc+1;dd<numRealVertices();++dd)  {//!!!Consider using numVertices() here?
                     if(adjacent(cc, dd))
                         continue;
-                    if(aa==cc && bb==dd)
+                    if(aa==cc && bb==dd) //Note aa<bb and cc<dd
                         continue;
-                    auto kPcd = variableForkPcd(path,cc,dd);
-                    // build and add clauses (6) and (7)
-                    auto s_abcd = variableForsabcd(aa,bb,cc,dd); //discuss with Glenn, what is canonical here? !!!
-                    //(Should be negated if a,b flipped, no change for c,d, yes?
-                    
-                    // build and add clauses (8) and (9)
+                    addClauses6and7(path, cc, dd);
+                    addClauses8and9(path, cc, dd);
                     
                 }
         }
     }
+}
+
+void SATInstanceGenerator::addClauses6and7(const Path &p, Vertex c, Vertex d) {
+    auto kPcd = variableForkPcd(p,c,d);
+    Clause c6;
+    for (auto v:p)
+        c6.push_back(variableForTriangle(c, d, v));
+    Clause c7{reflected(c6)};
+    c6.push_back(kPcd);
+    c7.push_back(kPcd);
+    _sat.addClause(c6);
+    _sat.addClause(c7);
+}
+
+void SATInstanceGenerator::addClauses8and9(const Path &p, Vertex c, Vertex d) {
+    //!!!
+    auto s_abcd = variableForsabcd(p.front(),p.back(),c,d); //discuss with Glenn, what is canonical here? !!!
+    //(Should be negated if a,b flipped, no change for c,d, yes?
+    
+    // build and add clauses (8) and (9)
+
 }
 
 void SATInstanceGenerator::addNonEdgeVerticesNotInTriangleClauses()
