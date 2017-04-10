@@ -10,6 +10,7 @@
 #define SATInstanceGenerator_hpp
 #include "Graph.hpp"
 #include "SATInstance.hpp"
+#include "RangeUtilities.hpp"
 
 #include <string>
 
@@ -38,7 +39,12 @@ private:
     void addNonEdgeVerticesEssentiallyOnNonEdgeClauses();
     size_t numVertices() const;
     size_t numRealVertices() const;
-//    string nameFor(Vertex) const;
+    auto realVertices() const {return makeLoopRange<Vertex>(0,numRealVertices());}
+    auto nonEdgeVertices() const {return makeLoopRange<Vertex>(numRealVertices(),numVertices());}
+    auto allVertices() const {return makeLoopRange<Vertex>(0,numVertices());}
+    auto realVerticesAfter(Vertex s) const {return makeLoopRange<Vertex>(s+1,numRealVertices());}
+//    auto nonEdgeVerticesAfter() const {return makeLoopRange<Vertex>(numRealVertices(),numVertices());}
+    auto allVerticesAfter(Vertex s) const {return makeLoopRange<Vertex>(s+1,numVertices());}
     
     const Graph & _g;
     SATInstance _sat;
