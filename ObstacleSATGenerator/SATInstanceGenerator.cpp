@@ -179,7 +179,7 @@ void SATInstanceGenerator::addNoInteriorObstacleNonEdgeClauses(){
 
             Clause c{sab};
             for(auto ss:interior(path))
-                c.add(variableForTriangle(aa, bb, path[ss]));
+                c.add(variableForTriangle(aa, bb, ss));
             _sat.addClause(c);
             _sat.addClause(c.reflected());
         }
