@@ -24,15 +24,14 @@ Graph::Graph(const std::string & fname)
         throw std::runtime_error ("readGraph() couldn't open file " + fname);
     
     size_t numVerts;
-    ifile >> numVerts;
-    for(size_t ii=0;ii<numVerts;++ii)
-    {
+    if(!(ifile >> numVerts))
+        throw std::runtime_error ("readGraph() error reading file " + fname);
+    for(size_t ii=0;ii<numVerts;++ii) {
         _adjacencies.push_back(vector<int>());
-        for(size_t jj=0;jj<numVerts;++jj)
-        {
+        for(size_t jj=0;jj<numVerts;++jj) {
             int a;
             if(!(ifile >> a))
-                throw std::runtime_error ("readGraph() error reading file " + (fname+".txt"));
+                throw std::runtime_error ("readGraph() error reading file " + fname);
             _adjacencies.back().push_back(a);
         }
     }
