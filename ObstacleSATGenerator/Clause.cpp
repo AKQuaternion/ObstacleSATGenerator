@@ -16,7 +16,7 @@ Clause & Clause::add(Variable v) {
 }
 
 Clause & operator+=(Clause &lhs, const Clause &rhs){
-    lhs._variables.insert(lhs.end(),rhs.begin(),rhs.end());
+    lhs._variables.insert(lhs._variables.end(),rhs.begin(),rhs.end());
     return lhs;
 }
 

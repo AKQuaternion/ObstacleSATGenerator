@@ -31,12 +31,12 @@ Range<Iter> makeRange(Iter begin, Iter end) {
 }
 
 template <typename T>
-auto interior(T &t) -> Range<decltype(t.begin())> {
+auto interior(T &t) {
     auto newBegin {t.begin()};
     ++newBegin;
     auto newEnd {t.end()};
     --newEnd;
-    return {newBegin,newEnd};
+    return makeRange(newBegin,newEnd);
 }
 
 template <typename T>
