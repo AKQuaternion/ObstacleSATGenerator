@@ -27,16 +27,16 @@ private:
 
 template <class Iter>
 Range<Iter> makeRange(Iter begin, Iter end) {
-    return {begin, end};
+    return Range<Iter>(begin, end);
 }
 
 template <typename T>
-auto interior(T &t) {
+auto interior(T &t) -> Range<decltype(t.begin())> {
     auto newBegin {t.begin()};
     ++newBegin;
     auto newEnd {t.end()};
     --newEnd;
-    return makeRange(newBegin,newEnd);
+    return {newBegin,newEnd};
 }
 
 template <typename T>
