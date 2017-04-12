@@ -15,16 +15,24 @@ using std::string;
 #include "SATInstanceGenerator.hpp"
 
 int main() {
+    string fname{"icosahedron"};
     try {
-        Graph g("G13.txt");
+        Graph g(fname+".txt");
         cout << g;
         cout << endl;
-        
+
+        for (auto p:g.allInducedPaths())
+            cout << toString(p) << endl;
         SATInstanceGenerator sat(g);
-        sat.addNonEdgeVertices();
-        sat.addNoInteriorObstacleNonEdgeClauses();
+//        sat.addNonEdgeVertices();
+//        sat.show();
+        sat.addNoSingleObstacleNonEdgeClauses();
+        sat.show();
         sat.addFivePointRuleClauses();
-        sat.writeCNF("G13");
+        sat.show();
+//        sat.addNonEdgeVerticesNotInTriangleClauses();
+//        sat.show();
+        sat.writeCNF(fname);
     }
     catch (std::exception &e)
     {
