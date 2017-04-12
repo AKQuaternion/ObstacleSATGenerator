@@ -39,12 +39,11 @@ private:
     void addNonEdgeVerticesEssentiallyOnNonEdgeClauses();
     size_t numVertices() const;
     size_t numRealVertices() const;
-    auto realVertices() const {return makeLoopRange<Vertex>(0,numRealVertices());}
-    auto nonEdgeVertices() const {return makeLoopRange<Vertex>(numRealVertices(),numVertices());}
-    auto allVertices() const {return makeLoopRange<Vertex>(0,numVertices());}
-    auto realVerticesAfter(Vertex s) const {return makeLoopRange<Vertex>(s+1,numRealVertices());}
-//    auto nonEdgeVerticesAfter() const {return makeLoopRange<Vertex>(numRealVertices(),numVertices());}
-    auto allVerticesAfter(Vertex s) const {return makeLoopRange<Vertex>(s+1,numVertices());}
+    LoopRange<Vertex> realVertices() const {return {0,numRealVertices()};}
+    LoopRange<Vertex> nonEdgeVertices() const {return {numRealVertices(),numVertices()};}
+    LoopRange<Vertex> allVertices() const {return {0,numVertices()};}
+    LoopRange<Vertex> realVerticesAfter(Vertex s) const {return {s+1,numRealVertices()};}
+    LoopRange<Vertex> allVerticesAfter(Vertex s) const {return {s+1,numVertices()};}
     
     const Graph & _g;
     SATInstance _sat;
