@@ -12,6 +12,7 @@
 		497482561E982DED003C4F76 /* SATInstance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497482541E982DED003C4F76 /* SATInstance.cpp */; };
 		497482591E983A87003C4F76 /* Graph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497482581E983A87003C4F76 /* Graph.cpp */; };
 		4974825C1E983FA5003C4F76 /* SATInstanceGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4974825A1E983FA5003C4F76 /* SATInstanceGenerator.cpp */; };
+		4974825F1E9BEC85003C4F76 /* Clause.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4974825D1E9BEC85003C4F76 /* Clause.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,6 +38,12 @@
 		497482581E983A87003C4F76 /* Graph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Graph.cpp; sourceTree = "<group>"; };
 		4974825A1E983FA5003C4F76 /* SATInstanceGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SATInstanceGenerator.cpp; sourceTree = "<group>"; };
 		4974825B1E983FA5003C4F76 /* SATInstanceGenerator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SATInstanceGenerator.hpp; sourceTree = "<group>"; };
+		4974825D1E9BEC85003C4F76 /* Clause.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Clause.cpp; sourceTree = "<group>"; };
+		4974825E1E9BEC85003C4F76 /* Clause.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Clause.hpp; sourceTree = "<group>"; };
+		498F2E601E9D637900C5F396 /* G13.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = G13.txt; sourceTree = "<group>"; };
+		498F2E611E9D639100C5F396 /* icosahedron.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = icosahedron.txt; sourceTree = "<group>"; };
+		498F2E621E9D63A500C5F396 /* dodecahedron.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dodecahedron.txt; sourceTree = "<group>"; };
+		49B5BA611E9C2B7000EE7BF2 /* RangeUtilities.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RangeUtilities.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +60,7 @@
 		4973BE401E9811DD0066F131 = {
 			isa = PBXGroup;
 			children = (
+				498F2E5F1E9D635C00C5F396 /* Graph files */,
 				4973BE4B1E9811DD0066F131 /* ObstacleSATGenerator */,
 				4973BE4A1E9811DD0066F131 /* Products */,
 			);
@@ -70,16 +78,29 @@
 			isa = PBXGroup;
 			children = (
 				4973BE4C1E9811DD0066F131 /* main.cpp */,
+				49B5BA611E9C2B7000EE7BF2 /* RangeUtilities.hpp */,
 				497482571E983A87003C4F76 /* Graph.hpp */,
 				497482581E983A87003C4F76 /* Graph.cpp */,
 				4973BE531E9812EE0066F131 /* Variable.cpp */,
 				4973BE541E9812EE0066F131 /* Variable.hpp */,
+				4974825D1E9BEC85003C4F76 /* Clause.cpp */,
+				4974825E1E9BEC85003C4F76 /* Clause.hpp */,
 				497482541E982DED003C4F76 /* SATInstance.cpp */,
 				497482551E982DED003C4F76 /* SATInstance.hpp */,
 				4974825A1E983FA5003C4F76 /* SATInstanceGenerator.cpp */,
 				4974825B1E983FA5003C4F76 /* SATInstanceGenerator.hpp */,
 			);
 			path = ObstacleSATGenerator;
+			sourceTree = "<group>";
+		};
+		498F2E5F1E9D635C00C5F396 /* Graph files */ = {
+			isa = PBXGroup;
+			children = (
+				498F2E621E9D63A500C5F396 /* dodecahedron.txt */,
+				498F2E611E9D639100C5F396 /* icosahedron.txt */,
+				498F2E601E9D637900C5F396 /* G13.txt */,
+			);
+			name = "Graph files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,6 +162,7 @@
 			files = (
 				497482591E983A87003C4F76 /* Graph.cpp in Sources */,
 				4973BE4D1E9811DD0066F131 /* main.cpp in Sources */,
+				4974825F1E9BEC85003C4F76 /* Clause.cpp in Sources */,
 				497482561E982DED003C4F76 /* SATInstance.cpp in Sources */,
 				4974825C1E983FA5003C4F76 /* SATInstanceGenerator.cpp in Sources */,
 				4973BE551E9812EE0066F131 /* Variable.cpp in Sources */,
@@ -243,6 +265,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				HEADER_SEARCH_PATHS = /usr/local/include;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -251,6 +275,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				HEADER_SEARCH_PATHS = /usr/local/include;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
