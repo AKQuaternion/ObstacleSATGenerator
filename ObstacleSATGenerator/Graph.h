@@ -13,30 +13,30 @@
 #include <vector>
 #include <stdexcept>
 
-typedef size_t Vertex;
-typedef std::vector<Vertex> Path;
-typedef std::vector<Path > PathGroup;
+typedef std::vector<int> Path;
+typedef std::vector<std::vector<int> > Pathlist;
 
 class Graph
 {
     friend std::ostream & operator <<(std::ostream & os, const Graph & g);
     
 public:
+    typedef unsigned int Vertex;
     
     Graph(const std::string &fname);
     size_t numVerts() const;
-    PathGroup allPathsBetweenNonAdjacentVertices();
-    bool edge(Vertex i, Vertex j);
+    Pathlist allInducedPaths() const;
     
 private:
     bool notAdjacentToAnyButLast(const Path &p, Vertex vert) const;
-    PathGroup allPathsFromVOfLengthIOrLess(Vertex v, size_t i);
-    void filterPathsIncreasing(PathGroup &paths);
+    Pathlist allPathsFromVOfLengthIOrLess(Vertex v, size_t i) const;
+    void filterPathsIncreasing(Pathlist &paths) const;
     
-    std::vector<std::vector<int> > _adjacencies;
+    std::vector<std::vector<int> > _adj;
+    
 };
 
 std::ostream & operator<<(std::ostream &, const Graph & g);
-void printPathGroup(const PathGroup &pl);
+void printPathList(const Pathlist &pl);
 
 #endif /* GRAPH_H_ */
