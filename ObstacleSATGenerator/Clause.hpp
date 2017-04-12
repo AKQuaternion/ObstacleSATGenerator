@@ -20,12 +20,13 @@ public:
     Clause(Variable v):_variables{std::move(v)} {};
     Clause & add(Variable v); //TODO: Deprecate, just call +=?
     Clause reflected() const;
-    auto begin() {return _variables.begin();}
-    auto begin() const  {return _variables.begin();}
-    auto end()  {return _variables.end();}
-    auto end() const  {return _variables.end();}
+    std::vector<Variable>::iterator begin() {return _variables.begin();}
+    std::vector<Variable>::const_iterator begin() const  {return _variables.begin();}
+    std::vector<Variable>::iterator end()  {return _variables.end();}
+    std::vector<Variable>::const_iterator end() const  {return _variables.end();}
 private:
     std::vector<Variable> _variables;
+public:
 };
 
 Clause operator+(Clause lhs, const Clause &rhs);
