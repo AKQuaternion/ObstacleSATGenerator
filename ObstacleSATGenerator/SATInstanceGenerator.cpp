@@ -201,7 +201,8 @@ void SATInstanceGenerator::addNoSingleObstacleNonEdgeClauses(){
 void SATInstanceGenerator::addClauses6and7(const Path &p, Vertex c, Vertex d) {
     Clause pathPart;
     for (auto v:p)
-        pathPart += variableForTriangle(c, d, v);
+        if (v != c && v != d)//TODO: discuss with Glenn
+            pathPart += variableForTriangle(c, d, v);
     auto kPcd = variableForkPcd(p,c,d);
     auto c6 = pathPart + kPcd;
     auto c7 = pathPart.reflected() + kPcd;
