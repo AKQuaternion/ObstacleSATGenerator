@@ -21,6 +21,4 @@ private:
     std::string _name;
 };
 
-
-
 #endif /* Variable_hpp */
