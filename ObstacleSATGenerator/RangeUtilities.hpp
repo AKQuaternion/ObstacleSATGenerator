@@ -27,7 +27,7 @@ private:
 
 template <class Iter>
 Range<Iter> makeRange(Iter begin, Iter end) {
-    return Range<Iter>(begin, end);
+    return {begin, end};
 }
 
 template <typename T>
