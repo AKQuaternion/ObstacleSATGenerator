@@ -165,6 +165,8 @@ Variable SATInstanceGenerator::variableForkPcd(const Path &path, Vertex cc,Verte
 Variable SATInstanceGenerator::variableForsabcd(Vertex a, Vertex b, Vertex c, Vertex d) const {
     if(b>a)
         return -variableForsabcd(b, a, c, d);
+    if(c>d)
+        swap(c,d);
     return {"s{"+to_string(a)+","+to_string(b)+","+to_string(c) + "," + to_string(d) +"}"};
     //TODO:: discuss with Glenn, what is canonical here?
     //(Should be negated if a,b flipped, no change for c,d, yes?
