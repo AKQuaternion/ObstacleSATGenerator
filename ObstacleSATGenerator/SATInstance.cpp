@@ -61,7 +61,7 @@ void SATInstance::writeCNFHelper(const string &filename, bool writeComments) con
         if (writeComments) {
             of << "c ";
             for (const auto &v : c)
-                of << v.name() << " ";
+                of << v.toString() << " ";
             of << endl;
         }
     }
