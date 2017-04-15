@@ -12,7 +12,7 @@
 #include <string>
 #include <vector>
 #include <map>
-#include <stddef.h>
+#include <cstddef>
 
 #include "Variable.hpp"
 #include "Clause.hpp"
@@ -21,9 +21,11 @@ class SATInstance {
 public:
     void addClause(const Clause &c);
     void writeCNF(const std::string &) const;
+    void writeCNFWithComments(const std::string &) const;
     size_t numVariables() const;
     size_t numClauses() const;
 private:
+    void writeCNFHelper(const std::string &, bool) const;
     size_t numberFromVariable(const Variable &v) const;
     std::vector<Clause> _clauses;
     std::map<std::string,size_t> _variableNumbers;

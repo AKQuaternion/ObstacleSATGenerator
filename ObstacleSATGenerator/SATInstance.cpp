@@ -42,7 +42,15 @@ size_t SATInstance::numClauses() const {
     return _clauses.size();
 }
 
-void SATInstance::writeCNF(const string &filename) const{
+void SATInstance::writeCNF(const std::string &s) const {
+    writeCNFHelper(s, false);
+}
+
+void SATInstance::writeCNFWithComments(const std::string &s) const {
+    writeCNFHelper(s, true);
+}
+
+void SATInstance::writeCNFHelper(const string &filename, bool writeComments) const{
     std::ofstream of(filename+".cnf");
     
     of << "p cnf " << _variableNumbers.size() <<" "<< _clauses.size() << endl;
@@ -51,5 +59,12 @@ void SATInstance::writeCNF(const string &filename) const{
             of << numberFromVariable(v) << " ";
         of << "0" << endl;
         }
+    if (writeComments)
+    for (const auto &c : _clauses) {
+        of << "c ";
+        for (const auto &v : c)
+            of << v.name() << " ";
+        of << "0" << endl;
+    }
     std::cout << "Wrote " << filename << ".cnf with " << _variableNumbers.size() <<" variables and "<< _clauses.size() << " clauses\n";
 }
