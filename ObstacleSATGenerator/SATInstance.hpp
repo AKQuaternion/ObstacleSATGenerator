@@ -29,6 +29,6 @@ private:
     long numberFromVariable(const Variable &v) const;
     std::vector<Clause> _clauses;
     std::map<std::string,size_t> _variableNumbers;
-    size_t _nextVariableNumber=1;
+    std::vector<std::string> _variableNames = {"NoVariableZero"};
 };
 #endif /* SATInstance_hpp */

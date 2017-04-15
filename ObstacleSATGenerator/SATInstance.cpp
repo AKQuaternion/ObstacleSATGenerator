@@ -14,12 +14,15 @@ using std::vector;
 using std::endl;
 #include <stdexcept>
 using std::runtime_error;
+#include <cassert>
 
 void SATInstance::addClause(const Clause &c) {
     for(const auto &v:c) {
         auto i = _variableNumbers.find(v.name());
-        if (i == _variableNumbers.end())
-            _variableNumbers.insert(i,std::make_pair(v.name(),_nextVariableNumber++));
+        if (i == _variableNumbers.end()){
+            _variableNumbers.insert(i,std::make_pair(v.name(),_variableNames.size()));
+            _variableNames.push_back(v.name());
+        }
     }
     _clauses.push_back(c);
 }
