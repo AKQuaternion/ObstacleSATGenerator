@@ -17,24 +17,43 @@ using std::endl;
 #include <sstream>
 using std::ostringstream;
 
-Graph::Graph(const std::string & fname)
+Graph::Graph(const std::string & fileName)
 {
-    std::ifstream ifile(fname);
+    std::ifstream ifile(fileName);
     if(!ifile)
-        throw std::runtime_error ("readGraph() couldn't open file " + fname);
+        throw std::runtime_error ("readGraph() couldn't open file " + fileName);
     
     size_t numVerts;
     if(!(ifile >> numVerts))
-        throw std::runtime_error ("readGraph() error reading file " + fname);
+        throw std::runtime_error ("readGraph() error reading file " + fileName);
     for(size_t ii=0;ii<numVerts;++ii) {
         _adjacencies.push_back(vector<int>());
         for(size_t jj=0;jj<numVerts;++jj) {
             int a;
             if(!(ifile >> a))
-                throw std::runtime_error ("readGraph() error reading file " + fname);
+                throw std::runtime_error ("readGraph() error reading file " + fileName);
             _adjacencies.back().push_back(a);
         }
     }
+}
+
+Graph Graph::fromGFormat(const std::string &fileName) {
+    Graph g;
+    std::ifstream fin(fileName);
+    if(!fin)
+        throw std::runtime_error ("fromGFormat() couldn't open file " + fileName);
+    int numVertices;
+    fin>>numVertices;
+    g._adjacencies = vector<vector<int>> (numVertices,vector<int>(numVertices));
+    for(int thisVertex=0;thisVertex<numVertices;++thisVertex) {
+        int neighbor;
+        fin >> neighbor;
+        while (neighbor != -1) {
+            g._adjacencies[thisVertex][neighbor]=true;
+            fin >> neighbor;
+        }
+    }
+    return g;
 }
 
 bool Graph::edge(Vertex i, Vertex j) const {

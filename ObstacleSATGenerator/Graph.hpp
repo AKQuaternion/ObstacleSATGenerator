@@ -22,11 +22,12 @@ class Graph
     friend std::ostream & operator <<(std::ostream & os, const Graph & g);
     
 public:
+    Graph() = default;
     Graph(const std::string &fname);
     size_t numVerts() const;
     PathGroup allInducedPaths() const;
     bool edge(Vertex i, Vertex j) const;
-    
+    static Graph fromGFormat(const std::string &fname);
 private:
     bool notAdjacentToAnyButLast(const Path &p, Vertex vert) const;
     PathGroup allPathsFromVOfLengthIOrLess(Vertex v, size_t i) const;
