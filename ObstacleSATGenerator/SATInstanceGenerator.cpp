@@ -250,6 +250,10 @@ void SATInstanceGenerator::writeCNF(const string &filename) {
     _sat.writeCNF(filename);
 }
 
+void SATInstanceGenerator::writeCNFWithComments(const string &filename) {
+    _sat.writeCNFWithComments(filename);
+}
+
 void SATInstanceGenerator::show() const {
     std::cout << _sat.numClauses() << std::endl;
 }

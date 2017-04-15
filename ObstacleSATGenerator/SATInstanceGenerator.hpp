@@ -24,6 +24,7 @@ public:
     void addNoSingleObstacleNonEdgeClauses();
     void addNonEdgeVerticesNotInTriangleClauses();
     void writeCNF(const std::string &filename);
+    void writeCNFWithComments(const std::string &filename);
     void show() const;
     
 private:

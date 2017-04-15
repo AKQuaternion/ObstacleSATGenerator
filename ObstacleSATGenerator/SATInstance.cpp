@@ -58,13 +58,12 @@ void SATInstance::writeCNFHelper(const string &filename, bool writeComments) con
         for (const auto &v : c)
             of << numberFromVariable(v) << " ";
         of << "0" << endl;
-        }
-    if (writeComments)
-        for (const auto &c : _clauses) {
+        if (writeComments) {
             of << "c ";
             for (const auto &v : c)
                 of << v.name() << " ";
             of << endl;
         }
+    }
     std::cout << "Wrote " << filename << ".cnf with " << _variableNumbers.size() <<" variables and "<< _clauses.size() << " clauses\n";
 }
