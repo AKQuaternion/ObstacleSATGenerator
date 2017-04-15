@@ -23,3 +23,10 @@ Variable operator-(Variable rhs) {
     rhs._sign = !rhs._sign;
     return rhs;
 }
+
+std::string Variable::toString() const {
+    if (negated())
+        return "-"+name();
+    else
+        return name();
+}
