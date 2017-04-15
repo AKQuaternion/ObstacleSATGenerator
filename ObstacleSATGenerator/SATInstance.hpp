@@ -26,7 +26,7 @@ public:
     size_t numClauses() const;
 private:
     void writeCNFHelper(const std::string &, bool) const;
-    size_t numberFromVariable(const Variable &v) const;
+    long numberFromVariable(const Variable &v) const;
     std::vector<Clause> _clauses;
     std::map<std::string,size_t> _variableNumbers;
     size_t _nextVariableNumber=1;

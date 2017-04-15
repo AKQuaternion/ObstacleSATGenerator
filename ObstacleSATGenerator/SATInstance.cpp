@@ -24,7 +24,7 @@ void SATInstance::addClause(const Clause &c) {
     _clauses.push_back(c);
 }
 
-size_t SATInstance::numberFromVariable(const Variable &v) const {
+long SATInstance::numberFromVariable(const Variable &v) const {
     auto i = _variableNumbers.find(v.name());
     if (i == _variableNumbers.end())
         throw runtime_error("SATInstance::numberFromVariable called with variable who's name isn't in _variableNumbers");
@@ -60,11 +60,11 @@ void SATInstance::writeCNFHelper(const string &filename, bool writeComments) con
         of << "0" << endl;
         }
     if (writeComments)
-    for (const auto &c : _clauses) {
-        of << "c ";
-        for (const auto &v : c)
-            of << v.name() << " ";
-        of << "0" << endl;
-    }
+        for (const auto &c : _clauses) {
+            of << "c ";
+            for (const auto &v : c)
+                of << v.name() << " ";
+            of << endl;
+        }
     std::cout << "Wrote " << filename << ".cnf with " << _variableNumbers.size() <<" variables and "<< _clauses.size() << " clauses\n";
 }
