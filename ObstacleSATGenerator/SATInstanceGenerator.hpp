@@ -21,7 +21,7 @@ public:
     void addFourPointRuleClauses();
     void addFivePointRuleClauses();
     void addNoInteriorObstacleNonEdgeClauses();
-    void addNoSingleObstacleNonEdgeClauses();
+    void addSingleObstacleNonEdgeClauses();
     void addNonEdgeVerticesNotInTriangleClauses();
     void writeCNF(const std::string &filename);
     void writeCNFWithComments(const std::string &filename);

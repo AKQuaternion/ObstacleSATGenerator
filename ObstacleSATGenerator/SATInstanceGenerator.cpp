@@ -58,7 +58,7 @@ Variable SATInstanceGenerator::variableForTriangle(Vertex a, Vertex b, Vertex c)
     if (a==b || b==c || a==c)
         throw runtime_error("variableFor() called with two equal vertices.");
     
-    return {"(" + to_string(a) + "," + to_string(b) + "," + to_string(c) + ")"};
+    return {"T(" + to_string(a) + "," + to_string(b) + "," + to_string(c) + ")"};
 }
 
 Vertex SATInstanceGenerator::vertexForNonEdge(Vertex a, Vertex b) {
@@ -186,7 +186,7 @@ void SATInstanceGenerator::addNoInteriorObstacleNonEdgeClauses(){
     }
 }
 
-void SATInstanceGenerator::addNoSingleObstacleNonEdgeClauses(){
+void SATInstanceGenerator::addSingleObstacleNonEdgeClauses(){
     for (const auto &path:_g.allInducedPaths()) {// paths are lexicographically sorted by first then last vertex with first<last.
         auto aa = path.front();
         auto bb = path.back();
