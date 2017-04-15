@@ -10,8 +10,7 @@
 #define RangeUtilities_h
 
 template<typename Iter>
-class Range
-{
+class Range {
 public:
     Range(Iter iter_begin, Iter iter_end)
     : _begin(iter_begin), _end(iter_end)
@@ -45,18 +44,15 @@ public:
     LoopRangeIterator(T value_)
     : value(value_){}
     
-    bool operator!=(LoopRangeIterator const& other) const
-    {
+    bool operator!=(LoopRangeIterator const& other) const {
         return value != other.value;
     }
     
-    T const& operator*() const
-    {
+    T const& operator*() const {
         return value;
     }
     
-    LoopRangeIterator& operator++()
-    {
+    LoopRangeIterator& operator++() {
         ++value;
         return *this;
     }
