@@ -20,15 +20,18 @@ using std::make_pair;
 #include <iostream>
 using std::cout;
 using std::endl;
+#include <cassert>
 
-SATInstanceGenerator::SATInstanceGenerator(const Graph &g) :_g(g),_nextNonEdgeVertexNumber(g.numVerts()) {
+SATInstanceGenerator::SATInstanceGenerator(const Graph &g) :_g(g) {
 }
 
 void SATInstanceGenerator::addNonEdgeVertices() {
     for(auto aa:realVertices())
         for(auto bb:realVerticesAfter(aa))
-            if (!_g.edge(aa, bb))
-                _nonEdgeVertexNumbers[make_pair(aa, bb)] =_nextNonEdgeVertexNumber++;
+            if (!_g.edge(aa, bb)) {
+                _nonEdgeVertexNumbers[make_pair(aa, bb)] = numRealVertices()+_nonEdgeVertexNames.size();
+                _nonEdgeVertexNames.push_back("<" + to_string(aa) + "," + to_string(bb) +">");
+            }
     addNonEdgeVerticesEssentiallyOnNonEdgeClauses();
 }
 
@@ -37,7 +40,7 @@ size_t SATInstanceGenerator::numRealVertices() const {
 }
 
 size_t SATInstanceGenerator::numVertices() const {
-    return _nextNonEdgeVertexNumber;
+    return numRealVertices() + _nonEdgeVertexNumbers.size();
 }
 
 bool SATInstanceGenerator::adjacent(Vertex a, Vertex b) const {
@@ -58,7 +61,9 @@ Variable SATInstanceGenerator::variableForTriangle(Vertex a, Vertex b, Vertex c)
     if (a==b || b==c || a==c)
         throw runtime_error("variableFor() called with two equal vertices.");
     
-    return {"T(" + to_string(a) + "," + to_string(b) + "," + to_string(c) + ")"};
+    auto cName = (c>=numRealVertices()?_nonEdgeVertexNames[c-numRealVertices()] : to_string(c));
+    
+    return {"T(" + to_string(a) + "," + to_string(b) + "," + cName + ")"};
 }
 
 Vertex SATInstanceGenerator::vertexForNonEdge(Vertex a, Vertex b) {
@@ -72,6 +77,7 @@ Vertex SATInstanceGenerator::vertexForNonEdge(Vertex a, Vertex b) {
 }
 
 void SATInstanceGenerator::addNonEdgeVerticesEssentiallyOnNonEdgeClauses() {
+    cout << "Adding clauses to enforce that the special \"non-edge\" vertices lie essentially on the segment of the non-edge." << endl;
     if (numRealVertices()==numVertices())
         std::cout << "You almost surely want to call addNonEdgeVertices() before calling addNonEdgeVerticesEssentiallyOnNonEdgeClauses()" << std::endl;
     for(auto aa:realVertices())
@@ -98,6 +104,7 @@ void SATInstanceGenerator::addNonEdgeVerticesEssentiallyOnNonEdgeClauses() {
  }
 
 void SATInstanceGenerator::addFivePointRuleClauses() {
+    cout << "Adding clauses to enforce the five point rule." << endl;
     for(auto aa : realVertices())
         for(auto bb : realVertices()) {
             if(aa==bb) continue;
@@ -138,6 +145,7 @@ void SATInstanceGenerator::addFivePointRuleClauses() {
 }
 
 void SATInstanceGenerator::addFourPointRuleClauses() {
+    cout << "Adding clauses to enforce the four point rule." << endl;
     for(auto aa : realVertices())
         for(auto bb : realVerticesAfter(aa))
             for(auto cc : realVerticesAfter(bb))
@@ -172,7 +180,8 @@ Variable SATInstanceGenerator::variableForsabcd(Vertex a, Vertex b, Vertex c, Ve
     //(Should be negated if a,b flipped, no change for c,d, yes?
 }
 
-void SATInstanceGenerator::addNoInteriorObstacleNonEdgeClauses(){
+void SATInstanceGenerator::addNoInteriorObstacleClauses(){
+    cout << "Adding clauses to enforce no interior obstacle." << endl;
     for (const auto &path:_g.allInducedPaths()) {// paths are lexicographically sorted by first then last vertex
         auto aa = path.front();
         auto bb = path.back();
@@ -181,15 +190,17 @@ void SATInstanceGenerator::addNoInteriorObstacleNonEdgeClauses(){
         Clause c{sab};
         for(auto ss:interior(path))
             c.add(variableForTriangle(aa, bb, ss));
-        _sat.addClause(c);
-        _sat.addClause(c.reflected());
+        _sat.addClause(c);              //clause 4 from the paper
+        _sat.addClause(c.reflected());  //clause 5 from the paper
     }
 }
 
-void SATInstanceGenerator::addSingleObstacleNonEdgeClauses(){
+void SATInstanceGenerator::addSingleObstacleClauses(){
+    cout << "Adding clauses to enforce a single obstacle." << endl;
     for (const auto &path:_g.allInducedPaths()) {// paths are lexicographically sorted by first then last vertex with first<last.
         auto aa = path.front();
         auto bb = path.back();
+        assert(aa<bb);
         for(Vertex cc=0;cc<numRealVertices();++cc)
             for(Vertex dd=cc+1;dd<numRealVertices();++dd)  {//TODO: Consider using numVertices() here? Ask Glenn.
                 if(adjacent(cc, dd) || (aa==cc && bb==dd))
@@ -221,20 +232,21 @@ void SATInstanceGenerator::addClauses8and9(const Path &p, Vertex c, Vertex d) {
     auto s_abcd = variableForsabcd(a,b,c,d);
     auto kPcd = variableForkPcd(p,c,d);
     auto c8 = -kPcd + -s_abcd + pathPart;
-    auto c9 = -kPcd + s_abcd + pathPart;
+    auto c9 = -kPcd +  s_abcd + pathPart.reflected();
     _sat.addClause(c8);
     _sat.addClause(c9);
 }
 
 void SATInstanceGenerator::addNonEdgeVerticesNotInTriangleClauses() {
-    //-abc V  azb V  bzc V  cza says "abc is counterclockwise, or (it's clockwise so) z is outsize of abc"
-    // abc V -azb V -bzc V -cza
+    cout << "Adding clauses to enforce that the special \"non-edge\" vertices cannot lie inside a triangle of the graph." << endl;
     for(auto aa : realVertices())
         for(auto bb : realVerticesAfter(aa))
             for(auto cc : realVerticesAfter(bb))
                 for(auto zz : nonEdgeVertices()) {
                     if (!adjacent(aa,bb) || !adjacent(aa,cc) || !adjacent(bb,cc))
                         continue;
+                    //-abc V  azb V  bzc V  cza says "abc is counterclockwise, or (it's clockwise so) z is outsize of abc"
+                    // abc V -azb V -bzc V -cza
                     auto abc = variableForTriangle(aa,bb,cc);
                     auto azb = variableForTriangle(aa,zz,bb);
                     auto bzc = variableForTriangle(bb,zz,cc);

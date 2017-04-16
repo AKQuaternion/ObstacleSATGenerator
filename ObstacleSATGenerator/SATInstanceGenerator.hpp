@@ -13,6 +13,7 @@
 #include "RangeUtilities.hpp"
 
 #include <string>
+#include <vector>
 
 class SATInstanceGenerator {
 public:
@@ -20,8 +21,8 @@ public:
     void addNonEdgeVertices();
     void addFourPointRuleClauses();
     void addFivePointRuleClauses();
-    void addNoInteriorObstacleNonEdgeClauses();
-    void addSingleObstacleNonEdgeClauses();
+    void addNoInteriorObstacleClauses();
+    void addSingleObstacleClauses();
     void addNonEdgeVerticesNotInTriangleClauses();
     void writeCNF(const std::string &filename);
     void writeCNFWithComments(const std::string &filename);
@@ -49,8 +50,8 @@ private:
     
     const Graph & _g;
     SATInstance _sat;
-    Vertex _nextNonEdgeVertexNumber;
     std::map<std::pair<Vertex,Vertex>,Vertex> _nonEdgeVertexNumbers;
+    std::vector<std::string> _nonEdgeVertexNames;
 };
 
 #endif /* SATInstanceGenerator_hpp */
