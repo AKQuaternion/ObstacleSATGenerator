@@ -18,7 +18,6 @@ public:
     Clause() = default;
     Clause(std::initializer_list<Variable> v) :_variables(v) {}
     Clause(Variable v):_variables{std::move(v)} {};
-    Clause & add(Variable v); //TODO: Deprecate, just call +=?
     Clause reflected() const;
     std::vector<Variable>::iterator begin() {return _variables.begin();}
     std::vector<Variable>::const_iterator begin() const  {return _variables.begin();}

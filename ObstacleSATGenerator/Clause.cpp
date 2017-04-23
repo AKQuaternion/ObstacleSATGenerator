@@ -10,11 +10,6 @@
 #include <utility>
 using std::move;
 
-Clause & Clause::add(Variable v) {
-    _variables.emplace_back(std::move(v));
-    return *this;
-}
-
 Clause & operator+=(Clause &lhs, const Clause &rhs){
     lhs._variables.insert(lhs.end(),rhs.begin(),rhs.end());
     return lhs;
