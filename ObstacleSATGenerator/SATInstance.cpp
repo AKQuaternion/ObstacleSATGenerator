@@ -19,9 +19,17 @@ using std::runtime_error;
 #include <cryptominisat5/cryptominisat.h>
 using namespace CMSat;
 
+static bool isTriangleVariable(const string &name) {
+    return name[0]=='T';
+}
+
+static bool doesntContainNonEdgeVertex(const string &name) {
+    return name.find('<')==string::npos;
+}
+
 bool SATInstance::important(uint32_t n) const {
     auto name = _variableNames[n+1];
-    return name[0]=='T' && name.find('<')==string::npos;
+    return isTriangleVariable(name) && doesntContainNonEdgeVertex(name);
 }
 
 bool SATInstance::satisfiable() const {
