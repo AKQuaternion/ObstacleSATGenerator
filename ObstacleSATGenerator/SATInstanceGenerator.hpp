@@ -27,6 +27,7 @@ public:
     void writeCNF(const std::string &filename);
     void writeCNFWithComments(const std::string &filename);
     void show() const;
+    bool satisfiable() const {return _sat.satisfiable();}
     
 private:
     Variable variableForTriangle(Vertex a, Vertex b, Vertex c) const;
