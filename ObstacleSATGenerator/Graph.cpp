@@ -39,7 +39,7 @@ Graph::Graph(const std::string & fileName)
 
 Graph Graph::fromGFormat(const std::string &fileName) {
     Graph g;
-    std::ifstream fin(fileName);
+    std::ifstream fin(fileName);//TODO: fromGformat should assume .g.txt (and other shouldn't be constructor?)
     if(!fin)
         throw std::runtime_error ("fromGFormat() couldn't open file " + fileName);
     int numVertices;
