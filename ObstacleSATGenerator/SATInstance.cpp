@@ -63,17 +63,17 @@ bool SATInstance::satisfiable() const {
             return false;
         }
         ++count;
-        //Use solution here. print it, for example.
-        
         vector<Lit> ban_solution;
         for (uint32_t var = 0; var < solver.nVars(); var++) {
             if (solver.get_model()[var] != l_Undef  && important(var)) {
-                cout << ((solver.get_model()[var] == l_True)? "+" : "-") /*<< _variableNames[var+1] << " "*/;
+//                cout << ((solver.get_model()[var] == l_True)? "+" : "-") /*<< _variableNames[var+1] << " "*/;
                 ban_solution.push_back(Lit(var, (solver.get_model()[var] == l_True)? true : false));
             }
         }
-        cout << endl;
+//        cout << endl;
         solver.add_clause(ban_solution);
+        if (count%1000==0)
+            cout << count << endl;
     }
     return (solver.okay());
 }
