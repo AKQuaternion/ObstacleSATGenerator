@@ -8,7 +8,7 @@
 
 #include "Variable.hpp"
 
-Variable::Variable(std::string name) : _name(name)
+Variable::Variable(std::string name) : _name(std::move(name))
 {}
 
 bool Variable::negated() const {
