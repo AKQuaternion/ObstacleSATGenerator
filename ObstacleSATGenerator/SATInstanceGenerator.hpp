@@ -16,6 +16,7 @@
 #include <vector>
 
 class SATInstanceGenerator {
+    friend class SolutionAnalyzer; //TODO: Untangle this. Really friend?
 public:
     SATInstanceGenerator(const Graph &g);
     void addNonEdgeVertices();
@@ -28,6 +29,7 @@ public:
     void writeCNFWithComments(const std::string &filename);
     void show() const;
     void printSolutions() const;
+    void analyzeSolutions() const;
     bool solve();    
 private:
     Variable variableForTriangle(Vertex a, Vertex b, Vertex c) const;

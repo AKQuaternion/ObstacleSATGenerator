@@ -6,8 +6,6 @@
 //  Copyright © 2017 Chris Hartman. All rights reserved.
 //
 
-#include "SATInstanceGenerator.hpp"
-#include "RangeUtilities.hpp"
 #include <stdexcept>
 using std::runtime_error;
 #include <string>
@@ -21,6 +19,10 @@ using std::make_pair;
 using std::cout;
 using std::endl;
 #include <cassert>
+
+#include "SATInstanceGenerator.hpp"
+#include "RangeUtilities.hpp"
+#include "SolutionAnalyzer.hpp"
 
 SATInstanceGenerator::SATInstanceGenerator(const Graph &g) :_g(g) {
 }
@@ -281,6 +283,10 @@ void SATInstanceGenerator::printSolutions() const {
         }
 }
 
+void SATInstanceGenerator::analyzeSolutions() const {
+    for(const auto& sol:_solutions)
+    SolutionAnalyzer analyzer(sol,*this);
+}
 
 bool SATInstanceGenerator::solve() {
     _solutions = _sat.satisfiable();
