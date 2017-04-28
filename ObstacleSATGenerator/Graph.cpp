@@ -16,6 +16,7 @@ using std::endl;
 #include <iomanip>
 #include <sstream>
 using std::ostringstream;
+#include <exception>
 
 Graph::Graph(const std::string & fileName)
 {
@@ -38,12 +39,20 @@ Graph::Graph(const std::string & fileName)
 }
 
 Graph Graph::fromGFormat(const std::string &fileName) {
-    Graph g;
     std::ifstream fin(fileName);//TODO: fromGformat should assume .g.txt (and other shouldn't be constructor?)
     if(!fin)
         throw std::runtime_error ("fromGFormat() couldn't open file " + fileName);
+    return fromGFormat(fin);
+}
+
+class out_of_graphs : public std::exception {};
+
+Graph Graph::fromGFormat(std::ifstream &fin){
+    Graph g;
     int numVertices;
     fin>>numVertices;
+//    if(!fin && fin.eof())
+//        throw out_of_graphs();
     g._adjacencies = vector<vector<int>> (numVertices,vector<int>(numVertices));
     for(int thisVertex=0;thisVertex<numVertices;++thisVertex) {
         int neighbor;
@@ -54,6 +63,22 @@ Graph Graph::fromGFormat(const std::string &fileName) {
         }
     }
     return g;
+}
+
+vector<Graph> Graph::graphsFromGFormatFile(const std::string& fileName){
+    std::ifstream fin(fileName);//TODO: fromGformat should assume .g.txt (and other shouldn't be constructor?)
+    if(!fin)
+        throw std::runtime_error ("fromGFormat() couldn't open file " + fileName);
+    fin.exceptions(std::istream::eofbit | std::istream::badbit);
+    vector<Graph> v;
+    while(1)
+        try {
+            v.push_back(fromGFormat(fin));
+        }
+        catch (std::ios_base::failure &e) {//fin eof
+            break;
+        }
+    return v;
 }
 
 bool Graph::edge(Vertex i, Vertex j) const {
