@@ -27,8 +27,8 @@ public:
     void writeCNF(const std::string &filename);
     void writeCNFWithComments(const std::string &filename);
     void show() const;
-    bool satisfiable() const {return _sat.satisfiable();}
-    
+    void printSolutions() const;
+    bool solve();    
 private:
     Variable variableForTriangle(Vertex a, Vertex b, Vertex c) const;
     Variable variableForsab(Vertex a, Vertex b) const;
@@ -53,6 +53,7 @@ private:
     SATInstance _sat;
     std::map<std::pair<Vertex,Vertex>,Vertex> _nonEdgeVertexNumbers;
     std::vector<std::string> _nonEdgeVertexNames;
+    std::vector<std::map<Variable,bool>> _solutions;
 };
 
 #endif /* SATInstanceGenerator_hpp */

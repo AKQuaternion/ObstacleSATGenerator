@@ -24,7 +24,7 @@ public:
     void writeCNFWithComments(const std::string &) const;
     size_t numVariables() const;
     size_t numClauses() const;
-    bool satisfiable() const;
+    std::vector<std::map<Variable,bool>> satisfiable() const;
     bool important(uint32_t n) const;
 private:
     void writeCNFHelper(const std::string &, bool) const;

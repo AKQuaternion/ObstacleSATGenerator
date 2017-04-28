@@ -22,4 +22,5 @@ private:
     std::string _name;
 };
 
+bool operator<(const Variable &lhs, const Variable &rhs);
 #endif /* Variable_hpp */

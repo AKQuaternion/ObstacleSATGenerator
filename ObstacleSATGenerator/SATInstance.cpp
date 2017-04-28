@@ -7,8 +7,12 @@
 //
 
 #include "SATInstance.hpp"
+#include <string>
 using std::string;
+#include <vector>
 using std::vector;
+#include <map>
+using std::map;
 #include <fstream>
 #include <iostream>
 using std::cout;
@@ -32,7 +36,7 @@ bool SATInstance::important(uint32_t n) const {
     return isTriangleVariable(name) && doesntContainNonEdgeVertex(name);
 }
 
-bool SATInstance::satisfiable() const {
+vector<map<Variable,bool>> SATInstance::satisfiable() const {
     SATSolver solver;
     
     solver.new_vars(numVariables());
@@ -54,28 +58,30 @@ bool SATInstance::satisfiable() const {
     else
         cout << "UNSatisfiable." << endl;
     
-    int count = 0;
+    vector<map<Variable,bool>> solutions;
     while(true) {
+        solutions.emplace_back();
         lbool ret = solver.solve();
         if (ret != l_True) {
             assert(ret == l_False);
-            cout << count << " solutions found." << endl;
-            return false;
+            cout << solutions.size() << " solutions found." << endl;
+            return solutions;
         }
-        ++count;
         vector<Lit> ban_solution;
         for (uint32_t var = 0; var < solver.nVars(); var++) {
             if (solver.get_model()[var] != l_Undef  && important(var)) {
+                solutions.back()[_variableNames[var+1]] = (solver.get_model()[var] == l_True);
 //                cout << ((solver.get_model()[var] == l_True)? "+" : "-") /*<< _variableNames[var+1] << " "*/;
                 ban_solution.push_back(Lit(var, (solver.get_model()[var] == l_True)? true : false));
             }
         }
-//        cout << endl;
         solver.add_clause(ban_solution);
-        if (count%1000==0)
-            cout << count << endl;
+        if (solutions.size()==10000){
+            cout << "Over 10000 solutions, moving on..." << endl;
+            return solutions;
+        }
     }
-    return (solver.okay());
+    return solutions;
 }
 
 void SATInstance::addClause(const Clause &c) {

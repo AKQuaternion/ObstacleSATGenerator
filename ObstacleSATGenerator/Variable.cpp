@@ -30,3 +30,7 @@ std::string Variable::toString() const {
     else
         return name();
 }
+
+bool operator<(const Variable &lhs, const Variable &rhs) {
+    return lhs.name() < rhs.name();
+}

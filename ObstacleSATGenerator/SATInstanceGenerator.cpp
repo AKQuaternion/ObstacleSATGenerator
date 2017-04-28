@@ -269,3 +269,17 @@ void SATInstanceGenerator::writeCNFWithComments(const string &filename) {
 void SATInstanceGenerator::show() const {
     std::cout << _sat.numClauses() << std::endl;
 }
+
+void SATInstanceGenerator::printSolutions() const {
+    for(const auto &sol:_solutions) {
+        for(const auto v:sol)
+            cout << (v.second?'+':'-');
+        cout << endl;
+    }
+}
+
+
+bool SATInstanceGenerator::solve() {
+    _solutions = _sat.satisfiable();
+    return !_solutions.empty();
+}
