@@ -284,11 +284,19 @@ void SATInstanceGenerator::printSolutions() const {
 }
 
 void SATInstanceGenerator::analyzeSolutions() const {
-    for(const auto& sol:_solutions)
-    SolutionAnalyzer analyzer(sol,*this);
+    size_t bestConvexHullSize=0;
+    SolutionAnalyzer bestSolution(_solutions[0],this);
+    for(const auto& sol:_solutions) {
+        SolutionAnalyzer analyzer(sol,this);
+        if (analyzer.findConvexHull().size() > bestConvexHullSize)
+            bestSolution = analyzer;
+    }
+    cout << "The solution with the largest convex hull: " << endl;
+    bestSolution.printConvexHull();
+    bestSolution.printInTriangles();
 }
 
-bool SATInstanceGenerator::solve() {
-    _solutions = _sat.satisfiable();
+bool SATInstanceGenerator::solve(size_t maxSolutions) {//default maxSolutions=100
+    _solutions = _sat.satisfiable(maxSolutions);
     return !_solutions.empty();
 }

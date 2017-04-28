@@ -17,6 +17,7 @@
 
 class SATInstanceGenerator {
     friend class SolutionAnalyzer; //TODO: Untangle this. Really friend?
+    // maybe a subclass that both can use.
 public:
     SATInstanceGenerator(const Graph &g);
     void addNonEdgeVertices();
@@ -30,7 +31,7 @@ public:
     void show() const;
     void printSolutions() const;
     void analyzeSolutions() const;
-    bool solve();    
+    bool solve(size_t maxSolutions=1000);
 private:
     Variable variableForTriangle(Vertex a, Vertex b, Vertex c) const;
     Variable variableForsab(Vertex a, Vertex b) const;
@@ -45,11 +46,11 @@ private:
     size_t numVertices() const;
     size_t numRealVertices() const;
     auto realVertices() const {return makeLoopRange<Vertex>(0,numRealVertices());}
-    auto nonEdgeVertices() const {return makeLoopRange<Vertex>(numRealVertices(),numVertices());}
-    auto allVertices() const {return makeLoopRange<Vertex>(0,numVertices());}
     auto realVerticesAfter(Vertex s) const {return makeLoopRange<Vertex>(s+1,numRealVertices());}
-//    auto nonEdgeVerticesAfter() const {return makeLoopRange<Vertex>(numRealVertices(),numVertices());}
+    auto allVertices() const {return makeLoopRange<Vertex>(0,numVertices());}
     auto allVerticesAfter(Vertex s) const {return makeLoopRange<Vertex>(s+1,numVertices());}
+    auto nonEdgeVertices() const {return makeLoopRange<Vertex>(numRealVertices(),numVertices());}
+//    auto nonEdgeVerticesAfter() const {return makeLoopRange<Vertex>(numRealVertices(),numVertices());}
     
     const Graph & _g;
     SATInstance _sat;
