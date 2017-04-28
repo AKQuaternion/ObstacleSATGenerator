@@ -13,6 +13,8 @@
 		497482591E983A87003C4F76 /* Graph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 497482581E983A87003C4F76 /* Graph.cpp */; };
 		4974825C1E983FA5003C4F76 /* SATInstanceGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4974825A1E983FA5003C4F76 /* SATInstanceGenerator.cpp */; };
 		4974825F1E9BEC85003C4F76 /* Clause.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4974825D1E9BEC85003C4F76 /* Clause.cpp */; };
+		49A082131EA2F10100F6D5C8 /* libcryptominisat5.5.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A082121EA2F10100F6D5C8 /* libcryptominisat5.5.0.dylib */; };
+		49C53D341EB2C9EC00633B3F /* SolutionAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49C53D321EB2C9EC00633B3F /* SolutionAnalyzer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +30,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		490ADB9D1EA18A51008C3BAA /* G36.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = G36.txt; sourceTree = "<group>"; };
+		490ADB9E1EA18C7C008C3BAA /* G37.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = G37.txt; sourceTree = "<group>"; };
 		4973BE491E9811DD0066F131 /* ObstacleSATGenerator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ObstacleSATGenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		4973BE4C1E9811DD0066F131 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		4973BE531E9812EE0066F131 /* Variable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Variable.cpp; sourceTree = "<group>"; };
@@ -43,7 +47,21 @@
 		498F2E601E9D637900C5F396 /* G13.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = G13.txt; sourceTree = "<group>"; };
 		498F2E611E9D639100C5F396 /* icosahedron.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = icosahedron.txt; sourceTree = "<group>"; };
 		498F2E621E9D63A500C5F396 /* dodecahedron.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dodecahedron.txt; sourceTree = "<group>"; };
+		49A082121EA2F10100F6D5C8 /* libcryptominisat5.5.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcryptominisat5.5.0.dylib; path = ../../../../../usr/local/lib/libcryptominisat5.5.0.dylib; sourceTree = "<group>"; };
+		49AB358F1EAAA01F00B2B8D0 /* 4cycle.g.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 4cycle.g.txt; sourceTree = "<group>"; };
+		49AB35901EAAA2AB00B2B8D0 /* 5wheel2hub.g.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 5wheel2hub.g.txt; sourceTree = "<group>"; };
+		49AB35911EAAA2B700B2B8D0 /* G3.g.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = G3.g.txt; sourceTree = "<group>"; };
+		49AB35921EAAA2B700B2B8D0 /* G5.g.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = G5.g.txt; sourceTree = "<group>"; };
+		49AB35931EAAA2B700B2B8D0 /* G13.g.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = G13.g.txt; sourceTree = "<group>"; };
+		49AB35941EAAA2CB00B2B8D0 /* G36.g.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = G36.g.txt; sourceTree = "<group>"; };
+		49AB35951EAAA2CB00B2B8D0 /* G37.g.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = G37.g.txt; sourceTree = "<group>"; };
 		49B5BA611E9C2B7000EE7BF2 /* RangeUtilities.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RangeUtilities.hpp; sourceTree = "<group>"; };
+		49B66EC61EAE531100A68FF4 /* K5.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = K5.txt; sourceTree = "<group>"; };
+		49B66EC71EAE552600A68FF4 /* K6.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = K6.txt; sourceTree = "<group>"; };
+		49B66EC81EAE55C800A68FF4 /* K7.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = K7.txt; sourceTree = "<group>"; };
+		49C53D311EB280B200633B3F /* triangularPrism.g.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = triangularPrism.g.txt; sourceTree = "<group>"; };
+		49C53D321EB2C9EC00633B3F /* SolutionAnalyzer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SolutionAnalyzer.cpp; sourceTree = "<group>"; };
+		49C53D331EB2C9EC00633B3F /* SolutionAnalyzer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SolutionAnalyzer.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49A082131EA2F10100F6D5C8 /* libcryptominisat5.5.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +82,7 @@
 				498F2E5F1E9D635C00C5F396 /* Graph files */,
 				4973BE4B1E9811DD0066F131 /* ObstacleSATGenerator */,
 				4973BE4A1E9811DD0066F131 /* Products */,
+				49A082111EA2F10000F6D5C8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -81,14 +101,16 @@
 				49B5BA611E9C2B7000EE7BF2 /* RangeUtilities.hpp */,
 				497482571E983A87003C4F76 /* Graph.hpp */,
 				497482581E983A87003C4F76 /* Graph.cpp */,
-				4973BE531E9812EE0066F131 /* Variable.cpp */,
 				4973BE541E9812EE0066F131 /* Variable.hpp */,
-				4974825D1E9BEC85003C4F76 /* Clause.cpp */,
+				4973BE531E9812EE0066F131 /* Variable.cpp */,
 				4974825E1E9BEC85003C4F76 /* Clause.hpp */,
-				497482541E982DED003C4F76 /* SATInstance.cpp */,
+				4974825D1E9BEC85003C4F76 /* Clause.cpp */,
 				497482551E982DED003C4F76 /* SATInstance.hpp */,
-				4974825A1E983FA5003C4F76 /* SATInstanceGenerator.cpp */,
+				497482541E982DED003C4F76 /* SATInstance.cpp */,
 				4974825B1E983FA5003C4F76 /* SATInstanceGenerator.hpp */,
+				4974825A1E983FA5003C4F76 /* SATInstanceGenerator.cpp */,
+				49C53D331EB2C9EC00633B3F /* SolutionAnalyzer.hpp */,
+				49C53D321EB2C9EC00633B3F /* SolutionAnalyzer.cpp */,
 			);
 			path = ObstacleSATGenerator;
 			sourceTree = "<group>";
@@ -99,8 +121,29 @@
 				498F2E621E9D63A500C5F396 /* dodecahedron.txt */,
 				498F2E611E9D639100C5F396 /* icosahedron.txt */,
 				498F2E601E9D637900C5F396 /* G13.txt */,
+				49AB35911EAAA2B700B2B8D0 /* G3.g.txt */,
+				49AB35921EAAA2B700B2B8D0 /* G5.g.txt */,
+				49AB35931EAAA2B700B2B8D0 /* G13.g.txt */,
+				490ADB9D1EA18A51008C3BAA /* G36.txt */,
+				49AB35941EAAA2CB00B2B8D0 /* G36.g.txt */,
+				49AB35951EAAA2CB00B2B8D0 /* G37.g.txt */,
+				49AB35901EAAA2AB00B2B8D0 /* 5wheel2hub.g.txt */,
+				49AB358F1EAAA01F00B2B8D0 /* 4cycle.g.txt */,
+				490ADB9E1EA18C7C008C3BAA /* G37.txt */,
+				49B66EC61EAE531100A68FF4 /* K5.txt */,
+				49B66EC71EAE552600A68FF4 /* K6.txt */,
+				49B66EC81EAE55C800A68FF4 /* K7.txt */,
+				49C53D311EB280B200633B3F /* triangularPrism.g.txt */,
 			);
 			name = "Graph files";
+			sourceTree = "<group>";
+		};
+		49A082111EA2F10000F6D5C8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				49A082121EA2F10100F6D5C8 /* libcryptominisat5.5.0.dylib */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -162,6 +205,7 @@
 			files = (
 				497482591E983A87003C4F76 /* Graph.cpp in Sources */,
 				4973BE4D1E9811DD0066F131 /* main.cpp in Sources */,
+				49C53D341EB2C9EC00633B3F /* SolutionAnalyzer.cpp in Sources */,
 				4974825F1E9BEC85003C4F76 /* Clause.cpp in Sources */,
 				497482561E982DED003C4F76 /* SATInstance.cpp in Sources */,
 				4974825C1E983FA5003C4F76 /* SATInstanceGenerator.cpp in Sources */,
@@ -267,6 +311,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -277,6 +322,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
