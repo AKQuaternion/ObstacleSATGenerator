@@ -60,24 +60,24 @@ vector<map<Variable,bool>> SATInstance::satisfiable() const {
     
     vector<map<Variable,bool>> solutions;
     while(true) {
-        solutions.emplace_back();
         lbool ret = solver.solve();
         if (ret != l_True) {
             assert(ret == l_False);
             cout << solutions.size() << " solutions found." << endl;
             return solutions;
         }
+        map<Variable,bool> solution;
         vector<Lit> ban_solution;
         for (uint32_t var = 0; var < solver.nVars(); var++) {
             if (solver.get_model()[var] != l_Undef  && important(var)) {
-                solutions.back()[_variableNames[var+1]] = (solver.get_model()[var] == l_True);
-//                cout << ((solver.get_model()[var] == l_True)? "+" : "-") /*<< _variableNames[var+1] << " "*/;
+                solution[_variableNames[var+1]] = (solver.get_model()[var] == l_True);
                 ban_solution.push_back(Lit(var, (solver.get_model()[var] == l_True)? true : false));
             }
         }
+        solutions.push_back(solution);
         solver.add_clause(ban_solution);
         if (solutions.size()==10000){
-            cout << "Over 10000 solutions, moving on..." << endl;
+            cout << "At least 10000 solutions, moving on..." << endl;
             return solutions;
         }
     }
