@@ -36,7 +36,7 @@ bool SATInstance::important(uint32_t n) const {
     return isTriangleVariable(name) && doesntContainNonEdgeVertex(name);
 }
 
-vector<map<Variable,bool>> SATInstance::satisfiable() const {
+vector<map<Variable,bool>> SATInstance::satisfiable(size_t maxSolutions) const {
     SATSolver solver;
     
     solver.new_vars(numVariables());
@@ -76,8 +76,8 @@ vector<map<Variable,bool>> SATInstance::satisfiable() const {
         }
         solutions.push_back(solution);
         solver.add_clause(ban_solution);
-        if (solutions.size()==10000){
-            cout << "At least 10000 solutions, moving on..." << endl;
+        if (solutions.size()==maxSolutions){
+            cout << "More than " << maxSolutions << " solutions, moving on..." << endl;
             return solutions;
         }
     }
