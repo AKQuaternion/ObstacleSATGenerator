@@ -19,6 +19,10 @@ const std::string & Variable::name() const {
     return _name;
 }
 
+bool Variable::sign() const {
+    return _sign;
+}
+
 Variable operator-(Variable rhs) {
     rhs._sign = !rhs._sign;
     return rhs;

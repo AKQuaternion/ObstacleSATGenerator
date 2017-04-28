@@ -16,6 +16,7 @@ public:
     Variable(std::string name);
     bool negated() const;
     const std::string & name() const;
+    bool sign() const;
     std::string toString() const;
 private:
     bool _sign = true;
