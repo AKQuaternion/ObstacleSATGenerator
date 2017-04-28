@@ -271,11 +271,14 @@ void SATInstanceGenerator::show() const {
 }
 
 void SATInstanceGenerator::printSolutions() const {
-    for(const auto &sol:_solutions) {
-        for(const auto v:sol)
-            cout << (v.second?'+':'-');
-        cout << endl;
-    }
+    if (_solutions.size()>100)
+        cout << "You don't really want to print over 100 solutions..." << endl;
+    else
+        for(const auto &sol:_solutions) {
+            for(const auto v:sol)
+                cout << (v.second?'+':'-');
+            cout << endl;
+        }
 }
 
 
