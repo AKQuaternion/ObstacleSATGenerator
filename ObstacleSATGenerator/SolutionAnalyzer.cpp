@@ -20,29 +20,34 @@ using std::endl;
 #include <string>
 using std::to_string;
 
-SolutionAnalyzer::SolutionAnalyzer(const std::map<Variable,bool> &solution, const SATInstanceGenerator &sig) :_solution(solution), _sat(sig){
+SolutionAnalyzer::SolutionAnalyzer(const std::map<Variable,bool> &solution, const SATInstanceGenerator *sig) :_solution(solution), _sat(sig){
 //    for(const auto &var : _solution) {
 //        cout << (var.second?'+':'-') << var.first.name() << endl;
 //    }
+}
+
+void SolutionAnalyzer::printConvexHull() const {
     cout << "Convex hull: ";
     for(auto v:findConvexHull())
         cout << v << " ";
     cout << endl;
-    for (auto a:_sat.realVertices())
-        for (auto b:_sat.realVerticesAfter(a))
-            for(auto c:_sat.realVerticesAfter(b))
-                for(auto x:_sat.realVertices()) {
+}
+
+void SolutionAnalyzer::printInTriangles() const {
+    for(auto x:_sat->realVertices())
+        for (auto a:_sat->realVertices())
+            for (auto b:_sat->realVerticesAfter(a))
+                for(auto c:_sat->realVerticesAfter(b)) {
                     if(x==a || x==b || x==c)
                         continue;
                     if(inTriangle(a, b, c, x))
-                        cout << x << " is in " << _sat.variableForTriangle(a, b, c).name() << endl;
+                        cout << x << " is in " << _sat->variableForTriangle(a, b, c).name() << endl;
                 }
-                    
 }
 
 bool SolutionAnalyzer::clockWise(Vertex a, Vertex b, Vertex c) const
 {
-    auto v = _sat.variableForTriangle(a, b, c);
+    auto v = _sat->variableForTriangle(a, b, c);
     auto i = _solution.find(v);
     if (i==_solution.end())
         throw std::runtime_error("SolutionAnalyzer::clockWise couldn't find variable");
@@ -51,7 +56,7 @@ bool SolutionAnalyzer::clockWise(Vertex a, Vertex b, Vertex c) const
 
 bool SolutionAnalyzer::inConvexHull(Vertex aa, Vertex bb) const
 {
-    for(auto cc:_sat.realVertices())
+    for(auto cc:_sat->realVertices())
     {
         if(cc==aa||cc==bb) continue;
         if(!clockWise(aa,bb,cc))
@@ -60,7 +65,7 @@ bool SolutionAnalyzer::inConvexHull(Vertex aa, Vertex bb) const
     return true;
 }
 
-bool SolutionAnalyzer::inTriangle(Vertex aa, Vertex bb, Vertex cc, Vertex xx)
+bool SolutionAnalyzer::inTriangle(Vertex aa, Vertex bb, Vertex cc, Vertex xx) const
 {
     if(clockWise(aa,bb,cc))
         return clockWise(aa,bb,xx)&&clockWise(bb,cc,xx)&&clockWise(cc,aa,xx);
@@ -68,10 +73,10 @@ bool SolutionAnalyzer::inTriangle(Vertex aa, Vertex bb, Vertex cc, Vertex xx)
         return !clockWise(aa,bb,xx)&&!clockWise(bb,cc,xx)&&!clockWise(cc,aa,xx);
 }
 
-vector<Vertex> SolutionAnalyzer::findFirstTwoInConvexHull()
+vector<Vertex> SolutionAnalyzer::findFirstTwoInConvexHull() const
 {
-    for(auto aa:_sat.realVertices())
-        for(auto bb:_sat.realVertices()) {
+    for(auto aa:_sat->realVertices())
+        for(auto bb:_sat->realVertices()) {
             if (aa==bb) continue;
             if(inConvexHull(aa,bb))
             {
@@ -84,14 +89,14 @@ vector<Vertex> SolutionAnalyzer::findFirstTwoInConvexHull()
     throw std::runtime_error ("findFirstTwoInConvexHull() couldn't find any!");
 }
 
-vector<Vertex> SolutionAnalyzer::findConvexHull()
+vector<Vertex> SolutionAnalyzer::findConvexHull() const
 {
     vector<Vertex> convHull = findFirstTwoInConvexHull();
     
     while(1)
     {
         Vertex last = convHull.back();
-        for(auto vv:_sat.realVertices())
+        for(auto vv:_sat->realVertices())
             if(last != vv && inConvexHull(last,vv)) {
                 if(vv==convHull.front())
                     return convHull;

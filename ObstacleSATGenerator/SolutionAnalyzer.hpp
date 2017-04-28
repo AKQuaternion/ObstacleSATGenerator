@@ -17,16 +17,18 @@ class SATInstanceGenerator;
 
 class SolutionAnalyzer {
 public:
-    SolutionAnalyzer(const std::map<Variable,bool> &solutions, const SATInstanceGenerator &sig);
+    SolutionAnalyzer(const std::map<Variable,bool> &solutions, const SATInstanceGenerator *sig);
     bool clockWise(Vertex a, Vertex b, Vertex c) const;
     bool inConvexHull(Vertex aa, Vertex bb) const;
-    bool inTriangle(Vertex aa, Vertex bb, Vertex cc, Vertex xx);
-    std::vector<Vertex> findFirstTwoInConvexHull();
-    std::vector<Vertex> findConvexHull(); //TODO: What should be private?
+    bool inTriangle(Vertex aa, Vertex bb, Vertex cc, Vertex xx) const;
+    std::vector<Vertex> findFirstTwoInConvexHull() const;
+    std::vector<Vertex> findConvexHull() const; //TODO: What should be private?
+    void printConvexHull() const;
+    void printInTriangles() const;
 
 private:
     size_t _numVertices;
     std::map<Variable,bool> _solution;
-    const SATInstanceGenerator &_sat;
+    const SATInstanceGenerator *_sat;
 };
 #endif /* SolutionAnalyzer_hpp */
