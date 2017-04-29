@@ -36,7 +36,7 @@ bool SATInstance::important(uint32_t n) const {
     return isTriangleVariable(name) && doesntContainNonEdgeVertex(name);
 }
 
-vector<map<Variable,bool>> SATInstance::satisfiable(size_t maxSolutions) const {
+vector<map<Variable,bool>> SATInstance::getSolutions(size_t maxSolutions) const {
     SATSolver solver;
     
     solver.new_vars(numVariables());
