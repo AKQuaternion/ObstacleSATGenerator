@@ -347,6 +347,6 @@ void SATInstanceGenerator::analyzeSolutions() const {
 }
 
 bool SATInstanceGenerator::solve(size_t maxSolutions) {//default maxSolutions=100
-    _solutions = _sat.satisfiable(maxSolutions);
+    _solutions = _sat.getSolutions(maxSolutions);
     return !_solutions.empty();
 }
