@@ -178,13 +178,11 @@ Variable SATInstanceGenerator::variableForsabcd(Vertex a, Vertex b, Vertex c, Ve
     if(c>d)
         swap(c,d);
     return {"s{"+to_string(a)+","+to_string(b)+","+to_string(c) + "," + to_string(d) +"}"};
-    //TODO:: discuss with Glenn, what is canonical here?
-    //(Should be negated if a,b flipped, no change for c,d, yes?
 }
 
 void SATInstanceGenerator::addNoInteriorObstacleClauses(){
     cout << "Adding clauses to enforce no interior obstacle." << endl;
-    for (const auto &path:_g.allInducedPaths()) {// paths are lexicographically sorted by first then last vertex
+    for (const auto &path:_g.allInducedPaths()) {
         auto aa = path.front();
         auto bb = path.back();
         auto sab = variableForsab(aa, bb);
@@ -199,12 +197,12 @@ void SATInstanceGenerator::addNoInteriorObstacleClauses(){
 
 void SATInstanceGenerator::addSingleObstacleClauses(){
     cout << "Adding clauses to enforce a single obstacle." << endl;
-    for (const auto &path:_g.allInducedPaths()) {// paths are lexicographically sorted by first then last vertex with first<last.
+    for (const auto &path:_g.allInducedPaths()) {
         auto aa = path.front();
         auto bb = path.back();
         assert(aa<bb);
-        for(Vertex cc=0;cc<numRealVertices();++cc)
-            for(Vertex dd=cc+1;dd<numRealVertices();++dd)  {//TODO: Consider using numVertices() here? Ask Glenn.
+        for(auto cc : realVertices())
+            for(auto dd : realVerticesAfter(cc))  {//TODO: Consider using numVertices() here? Ask Glenn.
                 if(adjacent(cc, dd) || (aa==cc && bb==dd))
                     continue;
                 addClauses6and7(path, cc, dd);
@@ -239,7 +237,7 @@ void SATInstanceGenerator::addClauses8and9(const Path &p, Vertex c, Vertex d) {
     _sat.addClause(c9);
 }
 
-void SATInstanceGenerator::addNonEdgeVerticesNotInTriangleClauses() {
+void SATInstanceGenerator::addNoInteriorObstacleSomeVerticesNotInTriangleClauses() {
     cout << "Adding clauses to enforce that the special \"non-edge\" vertices cannot lie inside a triangle of the graph." << endl;
     for(auto aa : realVertices())
         for(auto bb : realVerticesAfter(aa))
@@ -258,6 +256,56 @@ void SATInstanceGenerator::addNonEdgeVerticesNotInTriangleClauses() {
                     _sat.addClause(c);
                     _sat.addClause(c.reflected());
                 }
+}
+
+void SATInstanceGenerator::addSingleObstacleSomeVerticesNotInTriangleClauses() {
+    cout << "Adding clauses to enforce no non-adjacent vertices both inside and outside a triangle." << endl;
+    for (auto aa : realVertices())
+        for(auto bb : realVerticesAfter(aa))
+            for(auto cc : realVerticesAfter(bb)) {
+                if (!adjacent(aa, bb) || !adjacent(aa, cc) || !adjacent(bb, cc))
+                    continue;
+                for(auto xx : allVertices()) {
+                    if (xx==aa || xx==bb || xx==cc)
+                        continue;
+                    if (adjacent(xx, aa) && adjacent(xx, bb) && adjacent(xx, cc))
+                        continue;
+                    for (auto yy : allVertices()) {
+                        if (yy==xx || yy==aa || yy==bb || yy==cc)
+                            continue;
+                        auto abc = variableForTriangle(aa,bb,cc);
+                        auto abx = variableForTriangle(aa,bb,xx);
+                        auto bcx = variableForTriangle(bb,cc,xx);
+                        auto cax = variableForTriangle(cc,aa,xx);
+                        auto aby = variableForTriangle(aa,bb,yy);
+                        auto bcy = variableForTriangle(bb,cc,yy);
+                        auto cay = variableForTriangle(cc,aa,yy);
+
+                        Clause xInabc{-abc,-abx,-bcx,-cax};
+                        auto abClause = xInabc + aby;
+                        auto bcClause = xInabc + bcy;
+                        auto caClause = xInabc + cay;
+                        if (!adjacent(yy,aa)) {
+                            _sat.addClause(abClause);
+                            _sat.addClause(abClause.reflected());
+                            _sat.addClause(caClause);
+                            _sat.addClause(caClause.reflected());
+                        }
+                        if (!adjacent(yy,bb)) {
+                            _sat.addClause(abClause);
+                            _sat.addClause(abClause.reflected());
+                            _sat.addClause(bcClause);
+                            _sat.addClause(bcClause.reflected());
+                        }
+                        if (!adjacent(yy,cc)) {
+                            _sat.addClause(bcClause);
+                            _sat.addClause(bcClause.reflected());
+                            _sat.addClause(caClause);
+                            _sat.addClause(caClause.reflected());
+                        } //TODO: This adds duplicate clauses, but the SAT solver doesn't care. Do we?
+                    }
+                }
+            }
 }
 
 void SATInstanceGenerator::writeCNF(const string &filename) {
@@ -288,8 +336,10 @@ void SATInstanceGenerator::analyzeSolutions() const {
     SolutionAnalyzer bestSolution(_solutions[0],this);
     for(const auto& sol:_solutions) {
         SolutionAnalyzer analyzer(sol,this);
-        if (analyzer.findConvexHull().size() > bestConvexHullSize)
+        if (analyzer.findConvexHull().size() > bestConvexHullSize) {
             bestSolution = analyzer;
+            bestConvexHullSize = analyzer.findConvexHull().size();
+        }
     }
     cout << "The solution with the largest convex hull: " << endl;
     bestSolution.printConvexHull();
