@@ -28,6 +28,7 @@ public:
     PathGroup allInducedPaths() const;
     bool edge(Vertex i, Vertex j) const;
     static Graph fromGFormat(const std::string &fileName);
+    static Graph kN(size_t n);
     static std::vector<Graph> graphsFromGFormatFile(const std::string& fileName);
 private:
     static Graph fromGFormat(std::ifstream &fin);

@@ -37,6 +37,15 @@ Graph::Graph(const std::string & fileName)
         }
     }
 }
+Graph Graph::kN(size_t n){
+    Graph g;
+    g._adjacencies.resize(n);
+    for(size_t ii=0;ii<n;++ii)
+        for(int jj=0;jj<n;++jj)
+            g._adjacencies[ii].push_back(ii==jj?0:1);
+    cout << g;
+    return g;
+}
 
 Graph Graph::fromGFormat(const std::string &fileName) {
     std::ifstream fin(fileName);//TODO: fromGformat should assume .g.txt (and other shouldn't be constructor?)
