@@ -79,12 +79,7 @@ vector<Vertex> SolutionAnalyzer::findFirstTwoInConvexHull() const
         for(auto bb:_sat->realVertices()) {
             if (aa==bb) continue;
             if(inConvexHull(aa,bb))
-            {
-                vector<Vertex> retval;
-                retval.push_back(aa);
-                retval.push_back(bb);
-                return retval;
-            }
+                return {aa,bb};
         }
     throw std::runtime_error ("findFirstTwoInConvexHull() couldn't find any!");
 }
@@ -104,10 +99,11 @@ vector<Vertex> SolutionAnalyzer::findConvexHull() const
 {
     vector<Vertex> convHull = findFirstTwoInConvexHull();
     
-    while(1) {
-        auto next = nextInConvexHull(convHull.back());
-        if (next == convHull.front())
-            return convHull;
+    auto next = nextInConvexHull(convHull.back());
+    while (next != convHull.front()) {
         convHull.push_back(next);
+        next = nextInConvexHull(next);
     }
+    
+    return convHull;
 }
