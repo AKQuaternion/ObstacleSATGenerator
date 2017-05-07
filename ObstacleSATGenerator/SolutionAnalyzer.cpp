@@ -89,19 +89,25 @@ vector<Vertex> SolutionAnalyzer::findFirstTwoInConvexHull() const
     throw std::runtime_error ("findFirstTwoInConvexHull() couldn't find any!");
 }
 
+Vertex SolutionAnalyzer::nextInConvexHull(Vertex prev) const
+{
+    for(auto vv:_sat->realVertices()) {
+        if(vv == prev)
+            continue;
+        if (inConvexHull(prev,vv))
+            return vv;
+    }
+    throw std::runtime_error ("nextInConvexHull() couldn't find next vertex!");
+}
+
 vector<Vertex> SolutionAnalyzer::findConvexHull() const
 {
     vector<Vertex> convHull = findFirstTwoInConvexHull();
     
-    while(1)
-    {
-        Vertex last = convHull.back();
-        for(auto vv:_sat->realVertices())
-            if(last != vv && inConvexHull(last,vv)) {
-                if(vv==convHull.front())
-                    return convHull;
-                else
-                    convHull.push_back(vv);
-            }
+    while(1) {
+        auto next = nextInConvexHull(convHull.back());
+        if (next == convHull.front())
+            return convHull;
+        convHull.push_back(next);
     }
 }
