@@ -32,9 +32,8 @@ void doFourCycle() {
 }
 
 void doKn(int n) {
-    string fname{"K"+std::to_string(n)};
-    Graph g(fname +".txt");
-    cout << "Making SAT instance for " << fname << endl;
+    Graph g=Graph::kN(n);
+    cout << "Making SAT instance for K" << n << endl;
     cout << g << endl;
     
     SATInstanceGenerator sat(g);
