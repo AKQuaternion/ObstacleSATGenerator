@@ -16,7 +16,7 @@ using std::string;
 
 void doFourCycle() {
     string fname{"4cycle"};
-    Graph g(Graph::fromGFormat(fname +".g.txt"));
+    auto g = Graph::fromGFormat(fname);
     cout << "Making SAT instance for " << fname << endl;
     cout << g << endl;
     
@@ -72,7 +72,7 @@ void doTestAllClauses(const Graph &g) {//TODO: make this member of SATInstanceGe
 }
 
 void doTriangularPrism() {
-    Graph g{Graph::fromGFormat("triangularPrism.g.txt")};
+    auto g = Graph::fromGFormat("triangularPrism");
     
     SATInstanceGenerator sat(g);
     sat.addNonEdgeVertices();
@@ -90,7 +90,7 @@ void doTriangularPrism() {
 
 void doG3() {
     string fname{"G3"};
-    Graph g(Graph::fromGFormat(fname +".g.txt"));
+    auto g = Graph::fromGFormat(fname);
     cout << "Making SAT instance for " << fname << endl;
     cout << g << endl;
     
@@ -107,7 +107,7 @@ void doG3() {
 
 void doG5() {
     string fname{"G5"};
-    Graph g(Graph::fromGFormat(fname +".g.txt"));
+    auto g = Graph::fromGFormat(fname);
     cout << "Making SAT instance for " << fname << endl;
     cout << g << endl;
     
@@ -124,7 +124,7 @@ void doG5() {
 
 void fiveWheel2Hub() {
     string fname{"5wheel2hub"};
-    Graph g(Graph::fromGFormat(fname +".g.txt"));
+    auto g = Graph::fromGFormat(fname);
     cout << "Making SAT instance for " << fname << endl;
     cout << g << endl;
     
@@ -141,7 +141,7 @@ void fiveWheel2Hub() {
 
 void doG13() {
     string fname{"G13"};
-    Graph g(Graph::fromGFormat(fname +".g.txt"));
+    auto g = Graph::fromGFormat(fname);
     cout << "Making SAT instance for " << fname << endl;
     cout << g << endl;
     
@@ -157,7 +157,7 @@ void doG13() {
 
 void doG36() {
     string fname{"G36"};
-    Graph g(Graph::fromGFormat(fname +".g.txt"));
+    auto g = Graph::fromGFormat(fname);
     cout << "Making SAT instance for " << fname << endl;
     cout << g << endl;
     
@@ -172,7 +172,7 @@ void doG36() {
 
 void doG37() {
     string fname{"G37"};
-    Graph g(Graph::fromGFormat(fname +".g.txt"));
+    auto g = Graph::fromGFormat(fname);
     cout << "Making SAT instance for " << fname << endl;
     cout << g << endl;
     

@@ -27,9 +27,9 @@ public:
     size_t numVerts() const;
     PathGroup allInducedPaths() const;
     bool edge(Vertex i, Vertex j) const;
-    static Graph fromGFormat(const std::string &fileName);
+    static Graph fromGFormat(const std::string &graphName);
     static Graph kN(size_t n);
-    static std::vector<Graph> graphsFromGFormatFile(const std::string& fileName);
+    static std::vector<Graph> graphsFromGFormatFile(const std::string& graphName);
 private:
     static Graph fromGFormat(std::ifstream &fin);
     bool notAdjacentToAnyButLast(const Path &p, Vertex vert) const;
