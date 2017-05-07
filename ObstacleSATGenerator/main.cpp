@@ -43,18 +43,6 @@ void doKn(int n) {
     sat.solve();
 }
 
-void doImpossible() {
-    Graph g=Graph::kN(8);
-    cout << "Making 8 point rule SAT instance." << endl;
-    cout << g << endl;
-    
-    SATInstanceGenerator sat(g);
-    sat.addFourPointRuleClauses();
-    sat.addFivePointRuleClauses();
-    sat.add8PointRuleClauses();
-    sat.solve();
-    sat.analyzeSolutions();
-}
 void doIcosahedron() {
     string fname{"icosahedron"};
     Graph g(fname+".txt");
@@ -220,8 +208,7 @@ void doDodecahedron() {
 int main() {
     try {
 //        doFourCycle();
-//        doKn(5);
-        doImpossible();
+        doKn(5);
 //        doKn(7); // Should be 1198560, Indeed: "1198560 solutions found."
 //        doG3();
 //        doG5();
@@ -243,7 +230,7 @@ int main() {
     
     
     }
-    catch (int &e) {
+    catch (std::exception &e) {
         cout << "Exception: " << e.what() << endl;
     }
 
