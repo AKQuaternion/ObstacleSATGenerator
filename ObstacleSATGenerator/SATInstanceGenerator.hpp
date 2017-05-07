@@ -33,6 +33,7 @@ public:
     void printSolutions() const;
     void analyzeSolutions() const;
     bool solve(size_t maxSolutions=1000);
+    void add8PointRuleClauses();
 private:
     Variable variableForTriangle(Vertex a, Vertex b, Vertex c) const;
     Variable variableForsab(Vertex a, Vertex b) const;

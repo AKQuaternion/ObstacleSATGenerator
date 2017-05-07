@@ -331,7 +331,56 @@ void SATInstanceGenerator::printSolutions() const {
         }
 }
 
+void SATInstanceGenerator::add8PointRuleClauses() {
+    _sat.addClause({variableForTriangle(0, 1, 3)});
+    _sat.addClause({variableForTriangle(0, 2, 3)});
+    _sat.addClause({variableForTriangle(0, 7, 3)});
+    _sat.addClause({variableForTriangle(0, 3, 4)});
+    _sat.addClause({variableForTriangle(0, 3, 5)});
+    _sat.addClause({variableForTriangle(0, 3, 6)});
+    
+    _sat.addClause({variableForTriangle(4, 5, 1)});
+    _sat.addClause({variableForTriangle(4, 0, 1)});
+    _sat.addClause({variableForTriangle(4, 7, 1)});
+    _sat.addClause({variableForTriangle(4, 1, 2)});
+    _sat.addClause({variableForTriangle(4, 1, 3)});
+    _sat.addClause({variableForTriangle(4, 1, 6)});
+    
+    _sat.addClause({variableForTriangle(5, 0, 2)});
+    _sat.addClause({variableForTriangle(5, 1, 2)});
+    _sat.addClause({variableForTriangle(5, 6, 2)});
+    _sat.addClause({variableForTriangle(5, 2, 3)});
+    _sat.addClause({variableForTriangle(5, 2, 4)});
+    _sat.addClause({variableForTriangle(5, 2, 7)});
+
+//    _sat.addClause({variableForTriangle(0, 1, 2)});
+//    _sat.addClause({variableForTriangle(0, 1, 3)});
+//    _sat.addClause({variableForTriangle(0, 1, 4)});
+//    _sat.addClause({variableForTriangle(0, 1, 5)});
+//    _sat.addClause({variableForTriangle(0, 2, 3)});
+//    _sat.addClause({variableForTriangle(0, 2, 4)});
+//    _sat.addClause({variableForTriangle(0, 2, 5)});
+//    _sat.addClause({variableForTriangle(0, 3, 4)});
+//    _sat.addClause({variableForTriangle(0, 3, 5)});
+//    _sat.addClause({variableForTriangle(0, 4, 5)});
+//    _sat.addClause({variableForTriangle(1, 2, 3)});
+//    _sat.addClause({variableForTriangle(1, 2, 4)});
+//    _sat.addClause({variableForTriangle(1, 2, 5)});
+//    _sat.addClause({variableForTriangle(1, 3, 4)});
+//    _sat.addClause({variableForTriangle(1, 3, 5)});
+//    _sat.addClause({variableForTriangle(1, 4, 5)});
+//    _sat.addClause({variableForTriangle(2, 3, 4)});
+//    _sat.addClause({variableForTriangle(2, 3, 5)});
+//    _sat.addClause({variableForTriangle(2, 4, 5)});
+//    _sat.addClause({variableForTriangle(3, 4, 5)});
+
+}
+
 void SATInstanceGenerator::analyzeSolutions() const {
+    if(_solutions.empty()) {
+        cout << "There were no solutions." << endl;
+        return;
+    }
     size_t bestConvexHullSize=0;
     SolutionAnalyzer bestSolution(_solutions[0],this);
     for(const auto& sol:_solutions) {
