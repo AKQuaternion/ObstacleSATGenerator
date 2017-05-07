@@ -18,8 +18,8 @@ using std::endl;
 using std::ostringstream;
 #include <exception>
 
-Graph::Graph(const std::string & fileName)
-{
+Graph Graph::fromAdjacencyMatrixFile(const std::string &graphName){
+    auto fileName = graphName+".txt";
     std::ifstream ifile(fileName);
     if(!ifile)
         throw std::runtime_error ("readGraph() couldn't open file " + fileName);
@@ -27,16 +27,19 @@ Graph::Graph(const std::string & fileName)
     size_t numVerts;
     if(!(ifile >> numVerts))
         throw std::runtime_error ("readGraph() error reading file " + fileName);
+    Graph g;
     for(size_t ii=0;ii<numVerts;++ii) {
-        _adjacencies.push_back(vector<int>());
+        g._adjacencies.push_back(vector<char>());
         for(size_t jj=0;jj<numVerts;++jj) {
             int a;
             if(!(ifile >> a))
                 throw std::runtime_error ("readGraph() error reading file " + fileName);
-            _adjacencies.back().push_back(a);
+            g._adjacencies.back().push_back(a);
         }
     }
+    return g;
 }
+
 Graph Graph::kN(size_t n){
     Graph g;
     g._adjacencies.resize(n);
@@ -63,7 +66,7 @@ Graph Graph::fromGFormat(std::ifstream &fin){
     fin>>numVertices;
 //    if(!fin && fin.eof())
 //        throw out_of_graphs();
-    g._adjacencies = vector<vector<int>> (numVertices,vector<int>(numVertices));
+    g._adjacencies = vector<vector<char>> (numVertices,vector<char>(numVertices));
     for(int thisVertex=0;thisVertex<numVertices;++thisVertex) {
         int neighbor;
         fin >> neighbor;
@@ -181,7 +184,7 @@ std::ostream & operator <<(std::ostream & os, const Graph & g)
     {
         os << std::setw(3) << ii << " ";
         for(int jj=0;jj<g.numVerts();++jj)
-            os << g._adjacencies[ii][jj] << "  ";
+            os << (g._adjacencies[ii][jj]?"*":".") << "  ";
         os << std::endl;
     }
     return os;

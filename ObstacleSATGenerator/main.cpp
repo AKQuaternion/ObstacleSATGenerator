@@ -33,7 +33,7 @@ void doFourCycle() {
 
 void doKn(int n) {
     string fname{"K"+std::to_string(n)};
-    Graph g(fname +".txt");
+    Graph g = Graph::fromAdjacencyMatrixFile(fname);
     cout << "Making SAT instance for " << fname << endl;
     cout << g << endl;
     
@@ -45,7 +45,7 @@ void doKn(int n) {
 
 void doIcosahedron() {
     string fname{"icosahedron"};
-    Graph g(fname+".txt");
+    Graph g = Graph::fromAdjacencyMatrixFile(fname);
     cout << "Making SAT instance for " << fname << endl;
     cout << g << endl;
     
@@ -187,7 +187,7 @@ void doG37() {
 
 void doDodecahedron() {
     string fname{"dodecahedron"};
-    Graph g(fname+".txt");
+    Graph g = Graph::fromAdjacencyMatrixFile(fname);
     cout << "Making SAT instance for " << fname << endl;
     cout << g << endl;
     
@@ -200,15 +200,15 @@ void doDodecahedron() {
     sat.addFivePointRuleClauses();
     sat.addNoInteriorObstacleSomeVerticesNotInTriangleClauses();
     sat.addSingleObstacleSomeVerticesNotInTriangleClauses();
-//    sat.writeCNF(fname);
+    sat.writeCNF(fname);
     sat.solve(1);
-//    sat.analyzeSolutions();
+    sat.analyzeSolutions();
 }
 
 int main() {
     try {
 //        doFourCycle();
-        doKn(5);
+//        doKn(5);
 //        doKn(7); // Should be 1198560, Indeed: "1198560 solutions found."
 //        doG3();
 //        doG5();
@@ -216,7 +216,7 @@ int main() {
 //        fiveWheel2Hub();
 //        doG36();
 //        doG37();
-//        doDodecahedron();
+        doDodecahedron();
 //        doTriangularPrism();
 //        auto v=Graph::graphsFromGFormatFile("bad_bad_graphs_conn_d2_order9_planar.txt");
 //        for (const auto &g:v)

@@ -23,10 +23,10 @@ class Graph
     
 public:
     Graph() = default;
-    Graph(const std::string &fname);
     size_t numVerts() const;
     PathGroup allInducedPaths() const;
     bool edge(Vertex i, Vertex j) const;
+    static Graph fromAdjacencyMatrixFile(const std::string &graphName);
     static Graph fromGFormat(const std::string &graphName);
     static Graph kN(size_t n);
     static std::vector<Graph> graphsFromGFormatFile(const std::string& graphName);
@@ -36,7 +36,7 @@ private:
     PathGroup allPathsFromVOfLengthIOrLess(Vertex v, size_t i) const;
     void filterPathsIncreasingAndMoreThanTwoVertices(PathGroup &paths) const;
     
-    std::vector<std::vector<int> > _adjacencies;
+    std::vector<std::vector<char> > _adjacencies;
 };
 
 std::ostream & operator<<(std::ostream &, const Graph & g);
