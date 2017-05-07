@@ -52,7 +52,7 @@ Graph Graph::kN(size_t n){
 
 Graph Graph::fromGFormat(const std::string &graphName) {
     auto fileName = graphName+".g.txt";
-    std::ifstream fin(fileName);//TODO: fromGformat should assume .g.txt (and other shouldn't be constructor?)
+    std::ifstream fin(fileName);
     if(!fin)
         throw std::runtime_error ("fromGFormat() couldn't open file " + fileName);
     return fromGFormat(fin);
@@ -80,7 +80,7 @@ Graph Graph::fromGFormat(std::ifstream &fin){
 
 vector<Graph> Graph::graphsFromGFormatFile(const std::string &graphName) {
     auto fileName = graphName+".g.txt";
-    std::ifstream fin(fileName);//TODO: fromGformat should assume .g.txt (and other shouldn't be constructor?)
+    std::ifstream fin(fileName);
     if(!fin)
         throw std::runtime_error ("fromGFormat() couldn't open file " + fileName);
     fin.exceptions(std::istream::eofbit | std::istream::badbit);
