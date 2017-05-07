@@ -231,7 +231,7 @@ int main() {
     
     }
     catch (int &e) {
-//        cout << "Exception: " << e.what() << endl;
+        cout << "Exception: " << e.what() << endl;
     }
 
     return 0;
