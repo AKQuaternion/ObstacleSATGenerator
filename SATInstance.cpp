@@ -53,9 +53,9 @@ vector<map<Variable,bool>> SATInstance::getSolutions(size_t maxSolutions) const 
         for (const auto & v : c) {
             auto n = numberFromVariable(v);
             if (n>0)
-                clause.push_back(Lit( uint32_t(n)-1, false));
+                clause.emplace_back(n-1, false);
             else
-                clause.push_back(Lit(-uint32_t(n)-1, true));
+                clause.emplace_back(n-1, true);
         }
         solver.add_clause(clause);
     }
@@ -104,14 +104,14 @@ void SATInstance::addClause(const Clause &c) {
     _clauses.push_back(c);
 }
 
-uint64_t SATInstance::numberFromVariable(const Variable &v) const {
+int SATInstance::numberFromVariable(const Variable &v) const {
     auto i = _variableNumbers.find(v.name());
     if (i == _variableNumbers.end())
         throw runtime_error("SATInstance::numberFromVariable called with variable who's name isn't in _variableNumbers");
     if(v.negated())
-        return -i->second;
+        return -int(i->second);
     
-    return i->second;
+    return int(i->second);
 }
 
 size_t SATInstance::numVariables() const{

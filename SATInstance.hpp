@@ -27,7 +27,7 @@ public:
     bool important(uint32_t n) const;
 private:
     void writeCNFHelper(const std::string & /*filename*/, bool /*writeComments*/) const;
-    uint64_t numberFromVariable(const Variable &v) const;
+    int numberFromVariable(const Variable &v) const;
     std::vector<Clause> _clauses;
     std::map<std::string,size_t> _variableNumbers;
     std::vector<std::string> _variableNames = {"NoVariableZero"};
