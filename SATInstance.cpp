@@ -22,13 +22,14 @@ using std::vector;
 #include <map>
 #include <stdexcept>
 
-using namespace CMSat;
-
 using std::string;
 using std::map;
 using std::cout;
 using std::endl;
 using std::runtime_error;
+using CMSat::SATSolver;
+using CMSat::Lit;
+using CMSat::lbool;
 
 static bool isTriangleVariable(const string &name) {
     return name[0]=='T';
