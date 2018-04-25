@@ -71,7 +71,7 @@ Graph Graph::fromGFormat(std::ifstream &fin){
         int neighbor;
         fin >> neighbor;
         while (neighbor >= 0) {
-            g._adjacencies[thisVertex][size_t(neighbor)]=true;
+            g._adjacencies[thisVertex][size_t(neighbor)]=char(true);
             fin >> neighbor;
         }
     }
