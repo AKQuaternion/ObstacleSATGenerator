@@ -110,8 +110,8 @@ uint64_t SATInstance::numberFromVariable(const Variable &v) const {
         throw runtime_error("SATInstance::numberFromVariable called with variable who's name isn't in _variableNumbers");
     if(v.negated())
         return -i->second;
-    else
-        return i->second;
+    
+    return i->second;
 }
 
 size_t SATInstance::numVariables() const{

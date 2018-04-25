@@ -114,14 +114,12 @@ size_t Graph::numVerts() const
 
 static bool byFirstThenLast(const Path &l,const Path &r)
 {
-    if(l.front()==r.front())
-    {
+    if(l.front()==r.front()) {
         if (l.back()==r.back())
             return l.size()<r.size();
-        else
-            return l.back()<r.back();
+        return l.back()<r.back();
     }
-    else return l.front()<r.front();
+    return l.front()<r.front();
 }
 
 PathGroup Graph::allInducedPaths() const
@@ -151,26 +149,20 @@ PathGroup Graph::allPathsFromVOfLengthIOrLess(Vertex v, size_t i) const {
     if (i==0)
         return PathGroup(1,Path(1,v)); //one path with just v on it
     
-    else
-    {
-        PathGroup shorterPaths = allPathsFromVOfLengthIOrLess(v,i-1);
-        PathGroup retval(shorterPaths);
-        for(const auto &path : shorterPaths)
-        {
-            if (path.size() != i-1)
-                continue;
-            Vertex endVert = path.back();
-            for(size_t ii=0;ii<numVerts();++ii)
-            {
-                if(_adjacencies[endVert][ii] && notAdjacentToAnyButLast(path,ii))
-                {
-                    retval.push_back(path);
-                    retval.back().push_back(ii);
-                }
+    PathGroup shorterPaths = allPathsFromVOfLengthIOrLess(v,i-1);
+    PathGroup retval(shorterPaths);
+    for(const auto &path : shorterPaths) {
+        if (path.size() != i-1)
+            continue;
+        Vertex endVert = path.back();
+        for(size_t ii=0;ii<numVerts();++ii) {
+            if(_adjacencies[endVert][ii] && notAdjacentToAnyButLast(path,ii)) {
+                retval.push_back(path);
+                retval.back().push_back(ii);
             }
         }
-        return retval;
     }
+    return retval;
 }
 
 std::ostream & operator <<(std::ostream & os, const Graph & g)

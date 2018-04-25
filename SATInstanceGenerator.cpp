@@ -49,8 +49,8 @@ size_t SATInstanceGenerator::numVertices() const {
 bool SATInstanceGenerator::adjacent(Vertex a, Vertex b) const {
     if (a >= numRealVertices() || b >= numRealVertices())
         return false;
-    else
-        return _g.edge(a,b);
+    
+    return _g.edge(a,b);
 }
 
 Variable SATInstanceGenerator::variableForTriangle(Vertex a, Vertex b, Vertex c) const {

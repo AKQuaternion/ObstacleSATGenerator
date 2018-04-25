@@ -68,8 +68,8 @@ bool SolutionAnalyzer::inTriangle(Vertex aa, Vertex bb, Vertex cc, Vertex xx) co
 {
     if(clockWise(aa,bb,cc))
         return clockWise(aa,bb,xx)&&clockWise(bb,cc,xx)&&clockWise(cc,aa,xx);
-    else
-        return !clockWise(aa,bb,xx)&&!clockWise(bb,cc,xx)&&!clockWise(cc,aa,xx);
+    
+    return !clockWise(aa,bb,xx)&&!clockWise(bb,cc,xx)&&!clockWise(cc,aa,xx);
 }
 
 vector<Vertex> SolutionAnalyzer::findFirstTwoInConvexHull() const
