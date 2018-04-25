@@ -201,7 +201,7 @@ void SATInstanceGenerator::addSingleObstacleClauses(){
     for (const auto &path:_g.allInducedPaths()) {
         auto aa = path.front();
         auto bb = path.back();
-        assert(aa<bb);
+        assert(aa<bb); //NOLINT
         for(auto cc : realVertices())
             for(auto dd : realVerticesAfter(cc))  {
                 if(adjacent(cc, dd) || (aa==cc && bb==dd))
