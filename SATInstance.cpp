@@ -20,7 +20,12 @@ using std::endl;
 #include <stdexcept>
 using std::runtime_error;
 #include <cassert>
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wall"
+#pragma clang diagnostic ignored "-Weverything"
+#pragma clang diagnostic ignored "-Wzero-as-null-pointer-constant"
 #include <cryptominisat5/cryptominisat.h>
+#pragma clang diagnostic pop
 using namespace CMSat;
 
 static bool isTriangleVariable(const string &name) {
@@ -53,6 +58,8 @@ vector<map<Variable,bool>> SATInstance::getSolutions(size_t maxSolutions) const 
         solver.add_clause(clause);
     }
     
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wold-style-cast"
     if(solver.solve() == l_True)
         cout << "Satisfiable." << endl;
     else
@@ -72,6 +79,7 @@ vector<map<Variable,bool>> SATInstance::getSolutions(size_t maxSolutions) const 
             if (solver.get_model()[var] != l_Undef  && important(var)) {
                 solution[_variableNames[var+1]] = (solver.get_model()[var] == l_True);
                 ban_solution.push_back(Lit(var, (solver.get_model()[var] == l_True)? true : false));
+#pragma clang diagnostic pop
             }
         }
         solutions.push_back(solution);
@@ -94,7 +102,7 @@ void SATInstance::addClause(const Clause &c) {
     _clauses.push_back(c);
 }
 
-long SATInstance::numberFromVariable(const Variable &v) const {
+unsigned long SATInstance::numberFromVariable(const Variable &v) const {
     auto i = _variableNumbers.find(v.name());
     if (i == _variableNumbers.end())
         throw runtime_error("SATInstance::numberFromVariable called with variable who's name isn't in _variableNumbers");

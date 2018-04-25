@@ -11,7 +11,7 @@
 #include <string>
 
 class Variable {
-    friend Variable operator-(const Variable rhs);
+    friend Variable operator-(Variable rhs);
 public:
     Variable(std::string name);
     bool negated() const;

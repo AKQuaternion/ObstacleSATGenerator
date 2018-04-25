@@ -31,8 +31,7 @@ Variable operator-(Variable rhs) {
 std::string Variable::toString() const {
     if (negated())
         return "-"+name();
-    else
-        return name();
+    return name();
 }
 
 bool operator<(const Variable &lhs, const Variable &rhs) {

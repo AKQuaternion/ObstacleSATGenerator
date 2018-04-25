@@ -19,7 +19,7 @@ class SATInstanceGenerator {
     friend class SolutionAnalyzer; //TODO: Untangle this. Really friend?
     // maybe a subclass that both can use.
 public:
-    SATInstanceGenerator(const Graph &g);
+    explicit SATInstanceGenerator(const Graph &g);
     void addNonEdgeVertices();
     void addFourPointRuleClauses();
     void addFivePointRuleClauses();

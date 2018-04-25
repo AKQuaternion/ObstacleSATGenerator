@@ -34,7 +34,7 @@ Graph Graph::fromAdjacencyMatrixFile(const std::string &graphName){
             int a;
             if(!(ifile >> a))
                 throw std::runtime_error ("readGraph() error reading file " + fileName);
-            g._adjacencies.back().push_back(a);
+            g._adjacencies.back().push_back(char(a));
         }
     }
     return g;
@@ -44,7 +44,7 @@ Graph Graph::kN(size_t n){
     Graph g;
     g._adjacencies.resize(n);
     for(size_t ii=0;ii<n;++ii)
-        for(int jj=0;jj<n;++jj)
+        for(size_t jj=0;jj<n;++jj)
             g._adjacencies[ii].push_back(ii==jj?0:1);
     cout << g;
     return g;
@@ -62,16 +62,16 @@ class out_of_graphs : public std::exception {};
 
 Graph Graph::fromGFormat(std::ifstream &fin){
     Graph g;
-    int numVertices;
+    size_t numVertices;
     fin>>numVertices;
 //    if(!fin && fin.eof())
 //        throw out_of_graphs();
     g._adjacencies = vector<vector<char>> (numVertices,vector<char>(numVertices));
-    for(int thisVertex=0;thisVertex<numVertices;++thisVertex) {
+    for(size_t thisVertex=0;thisVertex<numVertices;++thisVertex) {
         int neighbor;
         fin >> neighbor;
-        while (neighbor != -1) {
-            g._adjacencies[thisVertex][neighbor]=true;
+        while (neighbor >= 0) {
+            g._adjacencies[thisVertex][size_t(neighbor)]=true;
             fin >> neighbor;
         }
     }
@@ -89,7 +89,7 @@ vector<Graph> Graph::graphsFromGFormatFile(const std::string &graphName) {
         try {
             v.push_back(fromGFormat(fin));
         }
-        catch (std::ios_base::failure &e) {//fin eof
+        catch (std::ios_base::failure &/*e*/) {//fin eof
             break;
         }
     return v;
@@ -127,7 +127,7 @@ static bool byFirstThenLast(const Path &l,const Path &r)
 PathGroup Graph::allInducedPaths() const
 {
     PathGroup allPaths;
-    for(int startVert=0;startVert<numVerts();++startVert)
+    for(size_t startVert=0;startVert<numVerts();++startVert)
     {
         PathGroup paths = allPathsFromVOfLengthIOrLess(startVert,numVerts());
         filterPathsIncreasingAndMoreThanTwoVertices(paths);
@@ -160,7 +160,7 @@ PathGroup Graph::allPathsFromVOfLengthIOrLess(Vertex v, size_t i) const {
             if (path.size() != i-1)
                 continue;
             Vertex endVert = path.back();
-            for(int ii=0;ii<numVerts();++ii)
+            for(size_t ii=0;ii<numVerts();++ii)
             {
                 if(_adjacencies[endVert][ii] && notAdjacentToAnyButLast(path,ii))
                 {
@@ -176,14 +176,14 @@ PathGroup Graph::allPathsFromVOfLengthIOrLess(Vertex v, size_t i) const {
 std::ostream & operator <<(std::ostream & os, const Graph & g)
 {
     os << "  ";
-    for(int jj=0;jj<g.numVerts();++jj)
+    for(size_t jj=0;jj<g.numVerts();++jj)
         os << std::setw(3) << jj;
     os << std::endl;
     
-    for(int ii=0;ii<g.numVerts();++ii)
+    for(size_t ii=0;ii<g.numVerts();++ii)
     {
         os << std::setw(3) << ii << " ";
-        for(int jj=0;jj<g.numVerts();++jj)
+        for(size_t jj=0;jj<g.numVerts();++jj)
             os << (g._adjacencies[ii][jj]?"*":".") << "  ";
         os << std::endl;
     }

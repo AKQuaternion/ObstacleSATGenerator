@@ -15,8 +15,21 @@ Clause & operator+=(Clause &lhs, const Clause &rhs){
     return lhs;
 }
 
+Clause & operator+=(Clause &lhs, const Variable &rhs){
+    return lhs += Clause{rhs};
+}
+
 Clause operator+(Clause lhs, const Clause &rhs){
     return lhs+=rhs;
+}
+
+Clause operator+(Clause lhs, const Variable &rhs){
+    return lhs+=rhs;
+}
+
+Clause operator+(const Variable &lhs, const Variable &rhs){
+    auto c = Clause{lhs};
+    return c+=rhs;
 }
 
 Clause Clause::reflected() const {

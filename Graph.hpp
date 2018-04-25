@@ -13,9 +13,9 @@
 #include <vector>
 #include <stdexcept>
 
-typedef size_t Vertex;
-typedef std::vector<Vertex> Path;
-typedef std::vector<Path > PathGroup;
+using Vertex = size_t;
+using Path = std::vector<Vertex>;
+using PathGroup = std::vector<Path>;
 
 class Graph
 {

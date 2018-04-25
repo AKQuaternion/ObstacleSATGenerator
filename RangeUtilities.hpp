@@ -41,7 +41,7 @@ auto interior(T &t) -> Range<decltype(t.begin())> {
 template <typename T>
 class LoopRangeIterator {
 public:
-    LoopRangeIterator(T value_)
+    explicit LoopRangeIterator(T value_)
     : value(value_){}
     
     bool operator!=(LoopRangeIterator const& other) const {
@@ -68,15 +68,15 @@ public:
     LoopRange(T from, T to)
     : _from(from), _to(to){}
     
-    LoopRange(T to)
+    explicit LoopRange(T to)
     : _from(0), _to(to){}
     
     LoopRangeIterator<T> begin() const {
-        return {_from};
+        return LoopRangeIterator<T>{_from};
     }
     
     LoopRangeIterator<T> end() const {
-        return {_to};
+        return LoopRangeIterator<T>{_to};
     }
     
 private:
