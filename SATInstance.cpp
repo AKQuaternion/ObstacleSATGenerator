@@ -104,7 +104,7 @@ void SATInstance::addClause(const Clause &c) {
     _clauses.push_back(c);
 }
 
-unsigned long SATInstance::numberFromVariable(const Variable &v) const {
+uint64_t SATInstance::numberFromVariable(const Variable &v) const {
     auto i = _variableNumbers.find(v.name());
     if (i == _variableNumbers.end())
         throw runtime_error("SATInstance::numberFromVariable called with variable who's name isn't in _variableNumbers");
