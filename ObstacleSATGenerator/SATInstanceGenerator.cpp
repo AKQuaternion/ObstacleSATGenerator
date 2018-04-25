@@ -87,7 +87,7 @@ void SATInstanceGenerator::addNonEdgeVerticesEssentiallyOnNonEdgeClauses() {
             if (adjacent(aa,bb))
                 continue;
             auto zz = vertexForNonEdge(aa,bb);
-            for(auto xx : realVertices()) {//TODO: Think about using allVertices() here?
+            for(auto xx : realVertices()) {
                 if (xx==aa||xx==bb||xx==zz)
                     continue;
                 // axb -> axz and xbz
@@ -202,7 +202,7 @@ void SATInstanceGenerator::addSingleObstacleClauses(){
         auto bb = path.back();
         assert(aa<bb);
         for(auto cc : realVertices())
-            for(auto dd : realVerticesAfter(cc))  {//TODO: Consider using numVertices() here? Ask Glenn.
+            for(auto dd : realVerticesAfter(cc))  {
                 if(adjacent(cc, dd) || (aa==cc && bb==dd))
                     continue;
                 addClauses4and5(path, cc, dd);
@@ -214,7 +214,7 @@ void SATInstanceGenerator::addSingleObstacleClauses(){
 void SATInstanceGenerator::addClauses4and5(const Path &p, Vertex c, Vertex d) {
     Clause pathPart;
     for (auto v:p)
-        if (v != c && v != d)//TODO: discuss with Glenn
+        if (v != c && v != d)
             pathPart += variableForTriangle(c, d, v);
     auto kPcd = variableForkPcd(p,c,d);
     auto c4 = pathPart + kPcd;
@@ -325,7 +325,7 @@ void SATInstanceGenerator::printSolutions() const {
         cout << "You don't really want to print over 100 solutions..." << endl;
     else
         for(const auto &sol:_solutions) {
-            for(const auto v:sol)
+            for(const auto &v:sol)
                 cout << (v.second?'+':'-');
             cout << endl;
         }
@@ -336,6 +336,8 @@ void SATInstanceGenerator::analyzeSolutions() const {
     SolutionAnalyzer bestSolution(_solutions[0],this);
     for(const auto& sol:_solutions) {
         SolutionAnalyzer analyzer(sol,this);
+//        analyzer.printConvexHull();
+//        analyzer.printInTriangles();
         if (analyzer.findConvexHull().size() > bestConvexHullSize) {
             bestSolution = analyzer;
             bestConvexHullSize = analyzer.findConvexHull().size();

@@ -66,9 +66,10 @@ void doTestAllClauses(const Graph &g) {//TODO: make this member of SATInstanceGe
     sat.addFivePointRuleClauses();
     sat.addNoInteriorObstacleSomeVerticesNotInTriangleClauses();
     sat.addSingleObstacleSomeVerticesNotInTriangleClauses();
-    sat.solve(10000);
-    sat.printSolutions();
-    sat.analyzeSolutions();
+    if (sat.solve(10000)) {
+        sat.printSolutions();
+        sat.analyzeSolutions();
+    }
 }
 
 void doTriangularPrism() {
@@ -216,16 +217,19 @@ int main() {
 //        fiveWheel2Hub();
 //        doG36();
 //        doG37();
-        doDodecahedron();
+//        doDodecahedron();
 //        doTriangularPrism();
-//        auto v=Graph::graphsFromGFormatFile("bad_bad_graphs_conn_d2_order9_planar.txt");
-//        for (const auto &g:v)
-//            doTestAllClauses(g);
-//
+        auto v=Graph::graphsFromGFormatFile("bad_graphs_conn_d2_order9_planar");
+        for (const auto &g:v) {
+            cout << g << endl;
+            doTestAllClauses(g);
+        }
+
     
         
-//        auto v=Graph::graphsFromGFormatFile("bad_bad_graphs_conn_d2_order9_planar.txt");
-//        doTestAllClauses(v[8]);
+//        auto v=Graph::graphsFromGFormatFile("bad_graphs_conn_d2_order9_planar");
+//        cout << v[9] << endl;
+//        doTestAllClauses(v[9]);
         
     
     
