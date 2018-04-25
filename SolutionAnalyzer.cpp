@@ -12,13 +12,14 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <utility>
 
 using std::map;
 using std::vector;
 using std::cout;
 using std::endl;
 
-SolutionAnalyzer::SolutionAnalyzer(const std::map<Variable,bool> &solution, const SATInstanceGenerator *sig) :_solution(solution), _sat(sig){
+SolutionAnalyzer::SolutionAnalyzer(std::map<Variable,bool> solution, const SATInstanceGenerator *sig) :_solution(std::move(solution)), _sat(sig){
 //    for(const auto &var : _solution) {
 //        cout << (var.second?'+':'-') << var.first.name() << endl;
 //    }
