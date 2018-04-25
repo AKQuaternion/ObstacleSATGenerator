@@ -206,6 +206,21 @@ void doDodecahedron() {
     sat.analyzeSolutions();
 }
 
+void doTestBad9s(const Graph &g) {
+    SATInstanceGenerator sat(g);
+    sat.addNonEdgeVertices();
+    sat.addSingleObstacleClauses();
+//    sat.addNoInteriorObstacleClauses();
+    sat.addFourPointRuleClauses();
+    sat.addFivePointRuleClauses();
+//    sat.addNoInteriorObstacleSomeVerticesNotInTriangleClauses();
+    sat.addSingleObstacleSomeVerticesNotInTriangleClauses();
+    if (sat.solve(10000)) {
+        sat.printSolutions();
+        sat.analyzeSolutions();
+    }
+}
+
 int main() {
     try {
 //        doFourCycle();
@@ -222,7 +237,7 @@ int main() {
         auto v=Graph::graphsFromGFormatFile("bad_graphs_conn_d2_order9_planar");
         for (const auto &g:v) {
             cout << g << endl;
-            doTestAllClauses(g);
+            doTestBad9s(g);
         }
 
     
