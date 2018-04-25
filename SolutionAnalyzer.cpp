@@ -17,7 +17,6 @@ using std::map;
 using std::vector;
 using std::cout;
 using std::endl;
-using std::to_string;
 
 SolutionAnalyzer::SolutionAnalyzer(const std::map<Variable,bool> &solution, const SATInstanceGenerator *sig) :_solution(solution), _sat(sig){
 //    for(const auto &var : _solution) {
