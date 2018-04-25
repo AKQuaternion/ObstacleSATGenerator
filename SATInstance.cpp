@@ -71,7 +71,7 @@ vector<map<Variable,bool>> SATInstance::getSolutions(size_t maxSolutions) const 
     while(true) {
         lbool ret = solver.solve();
         if (ret != l_True) {
-            assert(ret == l_False);
+            assert(ret == l_False); //NOLINT
             cout << solutions.size() << " solutions found." << endl;
             return solutions;
         }
