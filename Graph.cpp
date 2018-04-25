@@ -176,7 +176,7 @@ std::ostream & operator <<(std::ostream & os, const Graph & g)
     {
         os << std::setw(3) << ii << " ";
         for(size_t jj=0;jj<g.numVerts();++jj)
-            os << (g.edge(ii,jj)?"*":".") << "  ";
+            os << (g.edge(ii,jj)?'*':'.') << "  ";
         os << std::endl;
     }
     return os;
