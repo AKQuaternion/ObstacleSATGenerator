@@ -40,6 +40,6 @@ private:
 };
 
 std::ostream & operator<<(std::ostream & /*os*/, const Graph & g);
-void printPathGroup(const PathGroup &pl);
-std::string toString(const Path &p);
+void printPathGroup(const PathGroup &pg);
+std::string toString(const Path &path);
 #endif /* GRAPH_H_ */

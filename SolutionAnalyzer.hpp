@@ -17,7 +17,7 @@ class SATInstanceGenerator;
 
 class SolutionAnalyzer {
 public:
-    SolutionAnalyzer(const std::map<Variable,bool> &solutions, const SATInstanceGenerator *sig);
+    SolutionAnalyzer(const std::map<Variable,bool> &solution, const SATInstanceGenerator *sig);
     bool inTriangle(Vertex aa, Vertex bb, Vertex cc, Vertex xx) const;
     std::vector<Vertex> findFirstTwoInConvexHull() const;
     std::vector<Vertex> findConvexHull() const; // TODO(hartman): What should be private?
