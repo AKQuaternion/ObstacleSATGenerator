@@ -12,7 +12,7 @@
 #include <map>
 #include <vector>
 
-using Vertex=size_t; //TODO: duplicated from Graph.h
+using Vertex=size_t; // TODO(hartman): duplicated from Graph.h
 class SATInstanceGenerator;
 
 class SolutionAnalyzer {
@@ -20,7 +20,7 @@ public:
     SolutionAnalyzer(const std::map<Variable,bool> &solutions, const SATInstanceGenerator *sig);
     bool inTriangle(Vertex aa, Vertex bb, Vertex cc, Vertex xx) const;
     std::vector<Vertex> findFirstTwoInConvexHull() const;
-    std::vector<Vertex> findConvexHull() const; //TODO: What should be private?
+    std::vector<Vertex> findConvexHull() const; // TODO(hartman): What should be private?
     void printConvexHull() const;
     void printInTriangles() const;
 

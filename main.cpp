@@ -57,7 +57,7 @@ void doIcosahedron() {
     sat.solve();
 }
 
-void doTestAllClauses(const Graph &g) {//TODO: make this member of SATInstanceGenerator returning sat
+void doTestAllClauses(const Graph &g) {// TODO(hartman): make this member of SATInstanceGenerator returning sat
     SATInstanceGenerator sat(g);
     sat.addNonEdgeVertices();
     sat.addSingleObstacleClauses();

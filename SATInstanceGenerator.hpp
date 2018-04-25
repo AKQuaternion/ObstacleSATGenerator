@@ -15,7 +15,7 @@
 #include <vector>
 
 class SATInstanceGenerator {
-    friend class SolutionAnalyzer; //TODO: Untangle this. Really friend?
+    friend class SolutionAnalyzer; // TODO(hartman): Untangle this. Really friend?
     // maybe a subclass that both can use.
 public:
     explicit SATInstanceGenerator(const Graph &g);
