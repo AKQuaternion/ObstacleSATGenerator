@@ -13,6 +13,7 @@
 class Variable {
     friend Variable operator-(Variable rhs);
 public:
+// NOLINTNEXTLINE(google-explicit-constructor,hicpp-explicit-conversions)
     Variable(std::string name);
     bool negated() const;
     const std::string & name() const;
