@@ -39,8 +39,8 @@ private:
     Variable variableForkPcd(const Path &path, Vertex cc,Vertex dd) const;
     Variable variableForsabcd(Vertex a, Vertex b, Vertex c, Vertex d) const;
     Vertex vertexForNonEdge(Vertex a, Vertex b);
+    void addClauses4and5(const Path &p, Vertex c, Vertex d);
     void addClauses6and7(const Path &p, Vertex c, Vertex d);
-    void addClauses8and9(const Path &p, Vertex c, Vertex d);
 
     bool adjacent(Vertex a, Vertex b) const;
     void addNonEdgeVerticesEssentiallyOnNonEdgeClauses();

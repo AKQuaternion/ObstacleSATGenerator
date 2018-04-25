@@ -190,8 +190,8 @@ void SATInstanceGenerator::addNoInteriorObstacleClauses(){
         Clause c{sab};
         for(auto ss:interior(path))
             c += variableForTriangle(aa, bb, ss);
-        _sat.addClause(c);              //clause 4 from the paper
-        _sat.addClause(c.reflected());  //clause 5 from the paper
+        _sat.addClause(c);              //clause 8 from the paper
+        _sat.addClause(c.reflected());  //clause 9 from the paper
     }
 }
 
@@ -205,25 +205,25 @@ void SATInstanceGenerator::addSingleObstacleClauses(){
             for(auto dd : realVerticesAfter(cc))  {//TODO: Consider using numVertices() here? Ask Glenn.
                 if(adjacent(cc, dd) || (aa==cc && bb==dd))
                     continue;
+                addClauses4and5(path, cc, dd);
                 addClauses6and7(path, cc, dd);
-                addClauses8and9(path, cc, dd);
             }
     }
 }
 
-void SATInstanceGenerator::addClauses6and7(const Path &p, Vertex c, Vertex d) {
+void SATInstanceGenerator::addClauses4and5(const Path &p, Vertex c, Vertex d) {
     Clause pathPart;
     for (auto v:p)
         if (v != c && v != d)//TODO: discuss with Glenn
             pathPart += variableForTriangle(c, d, v);
     auto kPcd = variableForkPcd(p,c,d);
-    auto c6 = pathPart + kPcd;
-    auto c7 = pathPart.reflected() + kPcd;
-    _sat.addClause(c6);
-    _sat.addClause(c7);
+    auto c4 = pathPart + kPcd;
+    auto c5 = pathPart.reflected() + kPcd;
+    _sat.addClause(c4);
+    _sat.addClause(c5);
 }
 
-void SATInstanceGenerator::addClauses8and9(const Path &p, Vertex c, Vertex d) {
+void SATInstanceGenerator::addClauses6and7(const Path &p, Vertex c, Vertex d) {
     auto a = p.front();
     auto b = p.back();
     Clause pathPart;
@@ -231,10 +231,10 @@ void SATInstanceGenerator::addClauses8and9(const Path &p, Vertex c, Vertex d) {
         pathPart += variableForTriangle(a, b, v);
     auto s_abcd = variableForsabcd(a,b,c,d);
     auto kPcd = variableForkPcd(p,c,d);
-    auto c8 = -kPcd + -s_abcd + pathPart;
-    auto c9 = -kPcd +  s_abcd + pathPart.reflected();
-    _sat.addClause(c8);
-    _sat.addClause(c9);
+    auto c6 = -kPcd + -s_abcd + pathPart;
+    auto c7 = -kPcd +  s_abcd + pathPart.reflected();
+    _sat.addClause(c6);
+    _sat.addClause(c7);
 }
 
 void SATInstanceGenerator::addNoInteriorObstacleSomeVerticesNotInTriangleClauses() {
@@ -302,7 +302,7 @@ void SATInstanceGenerator::addSingleObstacleSomeVerticesNotInTriangleClauses() {
                             _sat.addClause(bcClause.reflected());
                             _sat.addClause(caClause);
                             _sat.addClause(caClause.reflected());
-                        } //TODO: This adds duplicate clauses, but the SAT solver doesn't care. Do we?
+                        } //This adds duplicate clauses, but the SAT solver doesn't care. Do we?
                     }
                 }
             }
