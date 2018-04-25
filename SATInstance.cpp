@@ -81,7 +81,6 @@ vector<map<Variable,bool>> SATInstance::getSolutions(size_t maxSolutions) const 
             return solutions;
         }
     }
-    return solutions;
 }
 
 void SATInstance::addClause(const Clause &c) {

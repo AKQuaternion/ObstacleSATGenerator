@@ -28,7 +28,6 @@ private:
     bool clockWise(Vertex a, Vertex b, Vertex c) const;
     bool inConvexHull(Vertex aa, Vertex bb) const;
     Vertex nextInConvexHull(Vertex prev) const;
-    size_t _numVertices;
     std::map<Variable,bool> _solution;
     const SATInstanceGenerator *_sat;
 };
