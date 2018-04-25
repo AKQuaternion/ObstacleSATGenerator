@@ -8,10 +8,10 @@
 #ifndef GRAPH_H_
 #define GRAPH_H_
 
-#include <string>
 #include <iostream>
-#include <vector>
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 using Vertex = size_t;
 using Path = std::vector<Vertex>;

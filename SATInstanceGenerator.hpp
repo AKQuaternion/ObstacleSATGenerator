@@ -9,9 +9,8 @@
 #ifndef SATInstanceGenerator_hpp
 #define SATInstanceGenerator_hpp
 #include "Graph.hpp"
-#include "SATInstance.hpp"
 #include "RangeUtilities.hpp"
-
+#include "SATInstance.hpp"
 #include <string>
 #include <vector>
 

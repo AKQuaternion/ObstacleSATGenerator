@@ -6,13 +6,13 @@
 //  Copyright © 2017 Chris Hartman. All rights reserved.
 //
 
+#include "SATInstanceGenerator.hpp"
 #include <iostream>
+#include <string>
+
 using std::cout;
 using std::endl;
-#include <string>
 using std::string;
-
-#include "SATInstanceGenerator.hpp"
 
 void doFourCycle() {
     string fname{"4cycle"};

@@ -6,23 +6,23 @@
 //  Copyright © 2017 Chris Hartman. All rights reserved.
 //
 
+#include "RangeUtilities.hpp"
+#include "SATInstanceGenerator.hpp"
+#include "SolutionAnalyzer.hpp"
+#include <algorithm>
+#include <cassert>
+#include <iostream>
 #include <stdexcept>
-using std::runtime_error;
 #include <string>
+#include <utility>
+
+using std::runtime_error;
 using std::string;
 using std::to_string;
-#include <algorithm>
 using std::swap;
-#include <utility>
 using std::make_pair;
-#include <iostream>
 using std::cout;
 using std::endl;
-#include <cassert>
-
-#include "SATInstanceGenerator.hpp"
-#include "RangeUtilities.hpp"
-#include "SolutionAnalyzer.hpp"
 
 SATInstanceGenerator::SATInstanceGenerator(const Graph &g) :_g(g) {
     _sat.addClause({variableForTriangle(0, 1, 2)});

@@ -7,17 +7,16 @@
 //
 
 #include "Variable.hpp"
-#include "SolutionAnalyzer.hpp"
 #include "SATInstanceGenerator.hpp"
+#include "SolutionAnalyzer.hpp"
+#include <iostream>
+#include <stdexcept>
+#include <string>
 
 using std::map;
 using std::vector;
-
-#include <iostream>
 using std::cout;
 using std::endl;
-#include <stdexcept>
-#include <string>
 using std::to_string;
 
 SolutionAnalyzer::SolutionAnalyzer(const std::map<Variable,bool> &solution, const SATInstanceGenerator *sig) :_solution(solution), _sat(sig){

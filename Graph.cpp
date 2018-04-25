@@ -6,17 +6,17 @@
  */
 
 #include "Graph.hpp"
-
+#include <exception>
 #include <fstream>
-#include <vector>
-using std::vector;
+#include <iomanip>
 #include <iostream>
+#include <sstream>
+#include <vector>
+
+using std::vector;
 using std::cout;
 using std::endl;
-#include <iomanip>
-#include <sstream>
 using std::ostringstream;
-#include <exception>
 
 Graph Graph::fromAdjacencyMatrixFile(const std::string &graphName){
     auto fileName = graphName+".txt";

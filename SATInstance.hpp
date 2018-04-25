@@ -9,13 +9,12 @@
 #ifndef SATInstance_hpp
 #define SATInstance_hpp
 
+#include "Clause.hpp"
+#include "Variable.hpp"
+#include <cstddef>
+#include <map>
 #include <string>
 #include <vector>
-#include <map>
-#include <cstddef>
-
-#include "Variable.hpp"
-#include "Clause.hpp"
 
 class SATInstance {
 public:

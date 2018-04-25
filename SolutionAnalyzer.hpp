@@ -8,8 +8,8 @@
 
 #ifndef SolutionAnalyzer_hpp
 #define SolutionAnalyzer_hpp
-#include <map>
 #include "Variable.hpp"
+#include <map>
 #include <vector>
 
 using Vertex=size_t; //TODO: duplicated from Graph.h

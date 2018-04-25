@@ -7,26 +7,28 @@
 //
 
 #include "SATInstance.hpp"
-#include <string>
-using std::string;
-#include <vector>
-using std::vector;
-#include <map>
-using std::map;
-#include <fstream>
-#include <iostream>
-using std::cout;
-using std::endl;
-#include <stdexcept>
-using std::runtime_error;
-#include <cassert>
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wall"
 #pragma clang diagnostic ignored "-Weverything"
 #pragma clang diagnostic ignored "-Wzero-as-null-pointer-constant"
 #include <cryptominisat5/cryptominisat.h>
 #pragma clang diagnostic pop
+#include <string>
+#include <vector>
+using std::vector;
+#include <cassert>
+#include <fstream>
+#include <iostream>
+#include <map>
+#include <stdexcept>
+
 using namespace CMSat;
+
+using std::string;
+using std::map;
+using std::cout;
+using std::endl;
+using std::runtime_error;
 
 static bool isTriangleVariable(const string &name) {
     return name[0]=='T';
