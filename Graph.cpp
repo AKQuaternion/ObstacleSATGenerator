@@ -29,7 +29,7 @@ Graph Graph::fromAdjacencyMatrixFile(const std::string &graphName){
         throw std::runtime_error ("readGraph() error reading file " + fileName);
     Graph g;
     for(size_t ii=0;ii<numVerts;++ii) {
-        g._adjacencies.push_back(vector<char>());
+        g._adjacencies.emplace_back(vector<char>{});
         for(size_t jj=0;jj<numVerts;++jj) {
             int a;
             if(!(ifile >> a))

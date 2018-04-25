@@ -80,7 +80,7 @@ vector<map<Variable,bool>> SATInstance::getSolutions(size_t maxSolutions) const 
         for (uint32_t var = 0; var < solver.nVars(); var++) {
             if (solver.get_model()[var] != l_Undef  && important(var)) {
                 solution[_variableNames[var+1]] = (solver.get_model()[var] == l_True);
-                ban_solution.push_back(Lit(var, (solver.get_model()[var] == l_True)? true : false));
+                ban_solution.emplace_back(var, (solver.get_model()[var] == l_True));
 #pragma clang diagnostic pop
             }
         }
