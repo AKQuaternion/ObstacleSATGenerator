@@ -85,7 +85,7 @@ vector<Graph> Graph::graphsFromGFormatFile(const std::string &graphName) {
         throw std::runtime_error ("fromGFormat() couldn't open file " + fileName);
     fin.exceptions(std::istream::eofbit | std::istream::badbit);
     vector<Graph> v;
-    while(1)
+    while(true)
         try {
             v.push_back(fromGFormat(fin));
         }
