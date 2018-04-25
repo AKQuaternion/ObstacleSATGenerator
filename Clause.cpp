@@ -7,8 +7,6 @@
 //
 
 #include "Clause.hpp"
-#include <utility>
-using std::move;
 
 Clause & operator+=(Clause &lhs, const Clause &rhs){
     lhs._variables.insert(lhs.end(),rhs.begin(),rhs.end());
