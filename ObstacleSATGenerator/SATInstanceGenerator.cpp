@@ -25,6 +25,7 @@ using std::endl;
 #include "SolutionAnalyzer.hpp"
 
 SATInstanceGenerator::SATInstanceGenerator(const Graph &g) :_g(g) {
+    _sat.addClause(variableForTriangle(0, 1, 2));
 }
 
 void SATInstanceGenerator::addNonEdgeVertices() {
