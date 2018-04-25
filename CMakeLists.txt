@@ -37,9 +37,11 @@ set(CMAKE_CXX_FLAGS
 ")
 
 find_package(cryptominisat5 REQUIRED)
+find_library(CM5LIBRARYFULLPATH ${CRYPTOMINISAT5_LIBRARIES})
+MESSAGE (STATUS ${CM5LIBRARYFULLPATH})
 include_directories( ${CRYPTOMINISAT5_INCLUDE_DIRS})
 
 add_executable(obstacleSat ${SOURCES})
 
-target_link_libraries(obstacleSat ${CRYPTOMINISAT5_LIBRARIES})
+target_link_libraries(obstacleSat ${CM5LIBRARYFULLPATH})
 
