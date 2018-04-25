@@ -96,7 +96,7 @@ vector<Graph> Graph::graphsFromGFormatFile(const std::string &graphName) {
 }
 
 bool Graph::edge(Vertex i, Vertex j) const {
-    return _adjacencies[i][j];
+    return bool(_adjacencies[i][j]);
 }
 
 bool Graph::notAdjacentToAnyButLast(const Path & p, Vertex vert) const
@@ -176,7 +176,7 @@ std::ostream & operator <<(std::ostream & os, const Graph & g)
     {
         os << std::setw(3) << ii << " ";
         for(size_t jj=0;jj<g.numVerts();++jj)
-            os << (g._adjacencies[ii][jj]?"*":".") << "  ";
+            os << (g.edge(ii,jj)?"*":".") << "  ";
         os << std::endl;
     }
     return os;
