@@ -23,7 +23,7 @@ public:
     void writeCNFWithComments(const std::string & /*s*/) const;
     size_t numVariables() const;
     size_t numClauses() const;
-    std::vector<std::map<Variable,bool>> getSolutions(size_t maxSolutions) const;
+    std::vector<std::map<std::string,bool>> getSolutions(size_t maxSolutions) const;
     bool important(uint32_t n) const;
 private:
     void writeCNFHelper(const std::string & /*filename*/, bool /*writeComments*/) const;

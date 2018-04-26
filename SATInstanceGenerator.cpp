@@ -66,7 +66,7 @@ Variable SATInstanceGenerator::variableForTriangle(Vertex a, Vertex b, Vertex c)
     
     auto cName = (c>=numRealVertices()?_nonEdgeVertexNames[c-numRealVertices()] : to_string(c));
     
-    return {"T(" + to_string(a) + "," + to_string(b) + "," + cName + ")"};
+    return Variable{"T(" + to_string(a) + "," + to_string(b) + "," + cName + ")"};
 }
 
 Vertex SATInstanceGenerator::vertexForNonEdge(Vertex a, Vertex b) {
@@ -166,11 +166,11 @@ void SATInstanceGenerator::addFourPointRuleClauses() {
 Variable SATInstanceGenerator::variableForsab(Vertex a, Vertex b) const {
     if(b>a)
         return -variableForsab(b, a);
-    return {"s{"+to_string(a)+","+to_string(b)+"}"};
+    return Variable{"s{"+to_string(a)+","+to_string(b)+"}"};
 }
 
 Variable SATInstanceGenerator::variableForkPcd(const Path &path, Vertex cc,Vertex dd) const{
-    return {"k_"+toString(path)+",{" + to_string(cc) + "," + to_string(dd) +"}"};
+    return Variable{"k_"+toString(path)+",{" + to_string(cc) + "," + to_string(dd) +"}"};
 }
 
 Variable SATInstanceGenerator::variableForsabcd(Vertex a, Vertex b, Vertex c, Vertex d) const {
@@ -178,7 +178,7 @@ Variable SATInstanceGenerator::variableForsabcd(Vertex a, Vertex b, Vertex c, Ve
         return -variableForsabcd(b, a, c, d);
     if(c>d)
         swap(c,d);
-    return {"s{"+to_string(a)+","+to_string(b)+","+to_string(c) + "," + to_string(d) +"}"};
+    return Variable{"s{"+to_string(a)+","+to_string(b)+","+to_string(c) + "," + to_string(d) +"}"};
 }
 
 void SATInstanceGenerator::addNoInteriorObstacleClauses(){

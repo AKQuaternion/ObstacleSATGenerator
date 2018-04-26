@@ -44,7 +44,7 @@ bool SATInstance::important(uint32_t n) const {
     return isTriangleVariable(name) && doesntContainNonEdgeVertex(name);
 }
 
-vector<map<Variable,bool>> SATInstance::getSolutions(size_t maxSolutions) const {
+vector<map<string,bool>> SATInstance::getSolutions(size_t maxSolutions) const {
     SATSolver solver;
     
     solver.new_vars(numVariables());
@@ -68,7 +68,7 @@ vector<map<Variable,bool>> SATInstance::getSolutions(size_t maxSolutions) const 
     else
         cout << "UNSatisfiable." << endl;
     
-    vector<map<Variable,bool>> solutions;
+    vector<map<string,bool>> solutions;
     while(true) {
         lbool ret = solver.solve();
         if (ret != l_True) {
@@ -76,7 +76,7 @@ vector<map<Variable,bool>> SATInstance::getSolutions(size_t maxSolutions) const 
             cout << solutions.size() << " solutions found." << endl;
             return solutions;
         }
-        map<Variable,bool> solution;
+        map<string,bool> solution;
         vector<Lit> ban_solution;
         for (uint32_t var = 0; var < solver.nVars(); var++) {
             if (solver.get_model()[var] != l_Undef  && important(var)) {

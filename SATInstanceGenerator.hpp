@@ -56,7 +56,7 @@ private:
     SATInstance _sat;
     std::map<std::pair<Vertex,Vertex>,Vertex> _nonEdgeVertexNumbers;
     std::vector<std::string> _nonEdgeVertexNames;
-    std::vector<std::map<Variable,bool>> _solutions;
+    std::vector<std::map<std::string,bool>> _solutions;
 };
 
 #endif /* SATInstanceGenerator_hpp */

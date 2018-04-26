@@ -18,8 +18,9 @@ using std::map;
 using std::vector;
 using std::cout;
 using std::endl;
+using std::string;
 
-SolutionAnalyzer::SolutionAnalyzer(std::map<Variable,bool> solution, const SATInstanceGenerator *sig) :_solution(std::move(solution)), _sat(sig){
+SolutionAnalyzer::SolutionAnalyzer(std::map<string,bool> solution, const SATInstanceGenerator *sig) :_solution(std::move(solution)), _sat(sig){
 //    for(const auto &var : _solution) {
 //        cout << (var.second?'+':'-') << var.first.name() << endl;
 //    }
@@ -47,7 +48,7 @@ void SolutionAnalyzer::printInTriangles() const {
 bool SolutionAnalyzer::clockWise(Vertex a, Vertex b, Vertex c) const
 {
     auto v = _sat->variableForTriangle(a, b, c);
-    auto i = _solution.find(v);
+    auto i = _solution.find(v.name());
     if (i==_solution.end())
         throw std::runtime_error("SolutionAnalyzer::clockWise couldn't find variable");
     return i->second == v.sign();
