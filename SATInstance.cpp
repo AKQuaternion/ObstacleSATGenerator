@@ -54,9 +54,9 @@ vector<map<string,bool>> SATInstance::getSolutions(size_t maxSolutions) const {
         for (const auto & v : c) {
             auto n = numberFromVariable(v);
             if (n>0)
-                clause.emplace_back(n-1, false);
+                clause.emplace_back( n-1, false);
             else
-                clause.emplace_back(n-1, true);
+                clause.emplace_back(-n-1, true);
         }
         solver.add_clause(clause);
     }
