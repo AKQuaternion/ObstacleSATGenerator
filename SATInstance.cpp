@@ -13,20 +13,20 @@
 #pragma clang diagnostic ignored "-Wzero-as-null-pointer-constant"
 #include <cryptominisat5/cryptominisat.h>
 #pragma clang diagnostic pop
-#include <string>
-#include <vector>
-using std::vector;
 #include <cassert>
 #include <fstream>
 #include <iostream>
 #include <map>
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 using std::string;
 using std::map;
 using std::cout;
 using std::endl;
 using std::runtime_error;
+using std::vector;
 using CMSat::SATSolver;
 using CMSat::Lit;
 using CMSat::lbool;
